@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 import { Reveal } from '../../components/ui/Reveal';
+import { InitiativeVaultDemo } from '../../components/work/InitiativeVaultDemo';
 
 export function InitiativeVaultCaseStudy() {
   return (
@@ -67,10 +68,19 @@ export function InitiativeVaultCaseStudy() {
 
         <Reveal delayMs={360}>
           <div className="mt-10 border border-border/70 bg-bg/25 p-5">
-            <div className="font-code text-[11px] tracking-[0.22em] text-muted">INTERACTIVE (OPTIONAL)</div>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
-              We can embed the interactive demo here once we finalize the visual layout.
-            </p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="font-code text-[11px] tracking-[0.22em] text-muted">INTERACTIVE DEMO</div>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  Tucked away here (not on the homepage): open when you want to poke at typed event-sourcing + replay.
+                </p>
+              </div>
+              <div className="font-code text-[11px] tracking-[0.22em] text-muted">
+                (Optional)
+              </div>
+            </div>
+
+            <InitiativeVaultDemo />
           </div>
         </Reveal>
       </Container>

@@ -3,7 +3,6 @@ import { Container } from '../ui/Container';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
 import { Tag } from '../ui/Tag';
-import { InitiativeVaultDemo } from './InitiativeVaultDemo';
 
 type Project = {
   title: string;
@@ -132,8 +131,6 @@ export function Work() {
                     <Tag key={`${p.title}-${t}`}>{t}</Tag>
                   ))}
                 </div>
-
-                {p.title === 'Initiative Vault' ? <InitiativeVaultDemo /> : null}
               </article>
             </Reveal>
           ))}

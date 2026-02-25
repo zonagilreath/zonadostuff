@@ -1,5 +1,4 @@
 import { Contact } from '../components/contact/Contact';
-import { EncounterDemo } from '../components/demo/EncounterDemo';
 import { Hero } from '../components/hero/Hero';
 import { MetricsBar } from '../components/metrics/MetricsBar';
 import { Skills } from '../components/skills/Skills';
@@ -10,7 +9,6 @@ export function Home() {
     <>
       <Hero />
       <MetricsBar />
-      <EncounterDemo />
       <Work />
       <Skills />
       <Contact />
