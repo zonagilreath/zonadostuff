@@ -63,7 +63,7 @@ const projects: Project[] = [
 
 export function Work() {
   return (
-    <section id="work" className="py-20">
+    <section id="work" className="scroll-mt-24 py-20">
       <Container>
         <Reveal>
           <SectionHeader label="▸ SELECTED WORK" title="Projects & Experience" />

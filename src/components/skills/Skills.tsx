@@ -39,7 +39,7 @@ const cards: SkillCard[] = [
 
 export function Skills() {
   return (
-    <section id="skills" className="py-20">
+    <section id="skills" className="scroll-mt-24 py-20">
       <Container>
         <Reveal>
           <SectionHeader label="▸ TECHNICAL STACK" title="Skills & Tools" />

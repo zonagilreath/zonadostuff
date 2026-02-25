@@ -8,7 +8,7 @@ export function Hero() {
   const { value } = useTyping('Full-Stack Engineer');
 
   return (
-    <section id="about" className="relative flex min-h-dvh items-center pt-24">
+    <section id="about" className="relative flex min-h-dvh scroll-mt-24 items-center pt-24">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div>

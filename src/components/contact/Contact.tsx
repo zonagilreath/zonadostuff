@@ -10,7 +10,7 @@ export function Contact() {
   const [copied, setCopied] = useState(false);
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="scroll-mt-24 py-20">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
