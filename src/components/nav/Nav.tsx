@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { useScrolled } from '../../hooks/useScrolled';
@@ -16,9 +17,19 @@ export function Nav() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrolled = useScrolled(12);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const active = useActiveSection<SectionId>(['about', 'work', 'skills', 'contact'] as const);
 
   const scrollToId = (id: SectionId) => {
+    // From non-home routes, jump home with a hash; ScrollToHash handles the scroll.
+    if (location.pathname !== '/') {
+      navigate(`/#${id}`);
+      return;
+    }
+
     document
       .getElementById(id)
       ?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
@@ -62,6 +73,21 @@ export function Nav() {
               />
             </button>
           ))}
+
+          <div className="ml-2 h-4 w-px bg-border/70" aria-hidden />
+
+          <button
+            onClick={() => navigate('/work/initiative-vault')}
+            className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          >
+            IV
+          </button>
+          <button
+            onClick={() => navigate('/work/athenahealth')}
+            className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          >
+            ATHENA
+          </button>
         </nav>
 
         <button
@@ -92,10 +118,30 @@ export function Nav() {
                 {item.label}
               </button>
             ))}
+
+            <div className="mt-2 border-t border-border/70 pt-2">
+              <button
+                onClick={() => {
+                  navigate('/work/initiative-vault');
+                  setMobileOpen(false);
+                }}
+                className="py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
+              >
+                Initiative Vault
+              </button>
+              <button
+                onClick={() => {
+                  navigate('/work/athenahealth');
+                  setMobileOpen(false);
+                }}
+                className="py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
+              >
+                athenahealth
+              </button>
+            </div>
           </div>
         </div>
       ) : null}
     </header>
   );
 }
-

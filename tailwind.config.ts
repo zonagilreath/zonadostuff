@@ -5,35 +5,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Initiative Vault dark theme palette
-        bg: '#222325',           // --background
-        surface: '#2b2d30',      // --card
-        'surface-dark': '#1f2023', // --popover
-        border: 'rgba(233, 240, 255, 0.142)', // --border
-        accent: '#21c65c',       // --primary-accent (teal)
-        'accent-dim': 'rgba(33, 198, 92, 0.15)',
-        text: '#fafafa',         // --foreground
-        muted: 'rgba(255, 255, 255, 0.6)', // --muted-foreground
-        'muted-bg': 'rgba(233, 240, 255, 0.06)', // --muted
-        destructive: '#c41e1e',  // --destructive
-        ring: '#259ded',         // --ring
+        // Portfolio palette
+        bg: '#0b0c0f',
+        surface: '#101218',
+        'surface-dark': '#0a0b10',
+        border: 'rgba(233, 240, 255, 0.13)',
+        accent: '#ff375f',
+        'accent-dim': 'rgba(255, 55, 95, 0.16)',
+        text: 'rgba(255, 255, 255, 0.94)',
+        muted: 'rgba(255, 255, 255, 0.62)',
+        'muted-bg': 'rgba(233, 240, 255, 0.06)',
+        destructive: '#ff375f',
+        ring: '#7dd3fc'
       },
       fontFamily: {
-        heading: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        heading: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         code: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         body: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['"New Rocker"', 'cursive'] // Initiative Vault display font
+        display: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
       },
       boxShadow: {
-        glow: '0 0 0 1px rgba(33,198,92,0.25), 0 0 24px rgba(33,198,92,0.12)',
         hud: '0 2px 17px 0 rgba(0, 0, 0, 0.15), 0 0 7px 0 rgba(0, 0, 0, 0.15)'
       },
       borderRadius: {
-        'xs': '4px',
-        'sm': '6px',
-        'md': '8px',
-        'lg': '10px',
-        'xl': '12px'
+        xs: '4px',
+        sm: '6px',
+        md: '8px',
+        lg: '10px',
+        xl: '12px'
       },
       keyframes: {
         blink: {
@@ -41,11 +40,11 @@ export default {
           '50%, 100%': { opacity: '0' }
         },
         'fade-in-up': {
-          'from': {
+          from: {
             opacity: '0',
             transform: 'translateY(8px)'
           },
-          'to': {
+          to: {
             opacity: '1',
             transform: 'translateY(0)'
           }

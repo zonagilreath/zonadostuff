@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=New+Rocker&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,30 +17,34 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   ::selection {
-    background: rgba(33, 198, 92, 0.22);
+    background: theme(colors.accent-dim);
   }
 
   /* Hide number input spinners */
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  input[type="number"] {
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 }
 
 @layer components {
-  /* Initiative Vault component patterns */
   .panel-card {
     @apply bg-surface flex flex-col gap-3 items-start overflow-hidden p-4 rounded-xl w-full border border-border;
   }
 
   .section-title {
-    @apply font-display leading-6 text-xl text-text tracking-[0.7px];
+    @apply font-heading leading-6 text-xl text-text tracking-[0.7px];
   }
 
   .stat-badge {
