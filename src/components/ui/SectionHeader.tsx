@@ -3,14 +3,23 @@ import type { ReactNode } from 'react';
 export function SectionHeader({
   label,
   title,
-  right
+  right,
+  align = 'left'
 }: {
   label: string;
   title: string;
   right?: ReactNode;
+  align?: 'left' | 'center';
 }) {
+  const isCenter = align === 'center';
+
   return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div
+      className={[
+        'flex flex-col gap-3',
+        isCenter ? 'items-center text-center' : 'sm:flex-row sm:items-end sm:justify-between'
+      ].join(' ')}
+    >
       <div>
         <div className="font-code text-xs tracking-[0.22em] text-accent/90">
           {label}
@@ -19,7 +28,7 @@ export function SectionHeader({
           {title}
         </h2>
       </div>
-      {right ? <div className="text-sm text-muted">{right}</div> : null}
+      {!isCenter && right ? <div className="text-sm text-muted">{right}</div> : null}
     </div>
   );
 }

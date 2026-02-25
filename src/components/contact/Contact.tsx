@@ -14,7 +14,12 @@ export function Contact() {
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
-            <SectionHeader label="▸ LET'S WORK TOGETHER" title="Get In Touch" right={null} />
+            <SectionHeader
+              label="▸ LET'S WORK TOGETHER"
+              title="Get In Touch"
+              right={null}
+              align="center"
+            />
           </Reveal>
 
           <Reveal delayMs={120}>
