@@ -60,7 +60,7 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden md:block">
             <Reveal delayMs={250}>
               <CodeBlock filename="zona.config.ts" code={HERO_CODE} />
             </Reveal>
