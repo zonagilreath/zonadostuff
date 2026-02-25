@@ -37,8 +37,8 @@ export function MetricsBar() {
     <section className="border-y border-border/70 bg-surface/25 py-10">
       <Container>
         <div ref={ref} className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {metrics.map((m) => (
-            <Reveal key={m.label}>
+          {metrics.map((m, idx) => (
+            <Reveal key={m.label} delayMs={idx * 90}>
               <div className="flex flex-col gap-1">
                 <div className="font-heading text-3xl font-bold tracking-tight text-text">
                   <MetricValue start={inView} to={m.to} decimals={m.decimals} format={m.format} />

@@ -2,6 +2,7 @@ import { ButtonLink } from '../ui/Button';
 import { Container } from '../ui/Container';
 import { Reveal } from '../ui/Reveal';
 import { useTyping } from '../../hooks/useTyping';
+import { CodeBlock } from '../code/CodeBlock';
 
 export function Hero() {
   const { value } = useTyping('Full-Stack Engineer');
@@ -61,17 +62,16 @@ export function Hero() {
 
           <div className="hidden lg:block">
             <Reveal delayMs={250}>
-              <div className="rounded-lg border border-border/70 bg-surface/70 p-5">
-                <div className="flex items-center gap-2 border-b border-border/70 pb-3">
-                  <div className="flex gap-2">
-                    <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-                    <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-                    <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                  </div>
-                  <div className="ml-2 font-code text-xs text-muted">zona.config.ts</div>
-                </div>
-                <pre className="mt-4 overflow-x-auto font-code text-sm leading-relaxed text-text">
-{`// zona.config.ts
+              <CodeBlock filename="zona.config.ts" code={HERO_CODE} />
+            </Reveal>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+const HERO_CODE = `// zona.config.ts
 const engineer = {
   name: "Zona Gilreath",
   location: "Austin, TX",
@@ -81,14 +81,5 @@ const engineer = {
 };
 
 export default engineer;
-`}
-                </pre>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
+`;
 

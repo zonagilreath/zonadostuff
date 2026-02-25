@@ -1,6 +1,7 @@
 import { Container } from '../ui/Container';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
+import { CodeBlock } from '../code/CodeBlock';
 
 type SkillCard = {
   icon: string;
@@ -79,9 +80,16 @@ export function Skills() {
         </div>
 
         <Reveal delayMs={160}>
-          <div className="mt-10 border border-border/70 bg-surface/45 p-6">
-            <pre className="overflow-x-auto font-code text-sm leading-relaxed text-text">
-{`// Real patterns from my work — type-safe, composable, tested
+          <div className="mt-10">
+            <CodeBlock filename="useEncounter.ts" code={PATTERN_CODE} />
+          </div>
+        </Reveal>
+      </Container>
+    </section>
+  );
+}
+
+const PATTERN_CODE = `// Real patterns from my work — type-safe, composable, tested
 import { trpc } from '../utils/trpc';
 
 function useEncounter(id: string) {
@@ -107,12 +115,5 @@ function useEncounter(id: string) {
 
   return { encounter: data, isLoading, updateHP };
 }
-`}
-            </pre>
-          </div>
-        </Reveal>
-      </Container>
-    </section>
-  );
-}
+`;
 
