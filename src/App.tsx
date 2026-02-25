@@ -6,6 +6,7 @@ import { MetricsBar } from './components/metrics/MetricsBar';
 import { Nav } from './components/nav/Nav';
 import { Skills } from './components/skills/Skills';
 import { Work } from './components/work/Work';
+import { EncounterDemo } from './components/demo/EncounterDemo';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <main className="relative z-10">
         <Hero />
         <MetricsBar />
+        <EncounterDemo />
         <Work />
         <Skills />
         <Contact />
@@ -25,4 +27,3 @@ export default function App() {
     </div>
   );
 }
-
