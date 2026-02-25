@@ -5,16 +5,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Portfolio palette
-        bg: '#0b0c0f',
-        surface: '#101218',
-        'surface-dark': '#0a0b10',
-        border: 'rgba(233, 240, 255, 0.13)',
+        bg: '#0a0a0b',
+        surface: '#101114',
+        'surface-dark': '#09090b',
+        border: 'rgba(255, 255, 255, 0.12)',
         accent: '#ff375f',
-        'accent-dim': 'rgba(255, 55, 95, 0.16)',
-        text: 'rgba(255, 255, 255, 0.94)',
-        muted: 'rgba(255, 255, 255, 0.62)',
-        'muted-bg': 'rgba(233, 240, 255, 0.06)',
+        'accent-dim': 'rgba(255, 55, 95, 0.18)',
+        text: '#f4f1ea',
+        muted: 'rgba(244, 241, 234, 0.66)',
+        'muted-bg': 'rgba(255, 255, 255, 0.05)',
         destructive: '#ff375f',
         ring: '#7dd3fc'
       },
@@ -23,9 +22,6 @@ export default {
         code: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         body: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         display: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
-      },
-      boxShadow: {
-        hud: '0 2px 17px 0 rgba(0, 0, 0, 0.15), 0 0 7px 0 rgba(0, 0, 0, 0.15)'
       },
       borderRadius: {
         xs: '4px',
@@ -38,21 +34,10 @@ export default {
         blink: {
           '0%, 49%': { opacity: '1' },
           '50%, 100%': { opacity: '0' }
-        },
-        'fade-in-up': {
-          from: {
-            opacity: '0',
-            transform: 'translateY(8px)'
-          },
-          to: {
-            opacity: '1',
-            transform: 'translateY(0)'
-          }
         }
       },
       animation: {
-        blink: 'blink 1.05s step-end infinite',
-        'fade-in-up': 'fade-in-up 0.15s ease-out'
+        blink: 'blink 1.05s step-end infinite'
       }
     }
   },

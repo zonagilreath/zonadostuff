@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { useScrolled } from '../../hooks/useScrolled';
@@ -24,7 +24,6 @@ export function Nav() {
   const active = useActiveSection<SectionId>(['about', 'work', 'skills', 'contact'] as const);
 
   const scrollToId = (id: SectionId) => {
-    // From non-home routes, jump home with a hash; ScrollToHash handles the scroll.
     if (location.pathname !== '/') {
       navigate(`/#${id}`);
       return;
@@ -40,19 +39,20 @@ export function Nav() {
       'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ' +
       'supports-[backdrop-filter]:backdrop-blur';
     return scrolled
-      ? `${base} border-border/70 bg-bg/75`
+      ? `${base} border-border/70 bg-bg/70`
       : `${base} border-transparent bg-transparent`;
   }, [scrolled]);
 
   return (
     <header className={containerClass}>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <button
-          onClick={() => scrollToId('about')}
-          className="font-heading text-base font-bold tracking-tight text-accent hover:text-accent/90"
+        <Link
+          to="/"
+          className="font-display text-sm font-bold tracking-[-0.02em] text-text hover:text-text/90"
+          aria-label="Home"
         >
-          {'<ZG />'}
-        </button>
+          ZONA
+        </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {navItems.map((item) => (
@@ -65,29 +65,23 @@ export function Nav() {
               ].join(' ')}
             >
               {item.label}
-              <span
-                className={[
-                  'absolute -bottom-2 left-0 h-px w-full transition-opacity',
-                  active === item.id ? 'bg-accent opacity-100' : 'bg-accent opacity-0'
-                ].join(' ')}
-              />
             </button>
           ))}
 
           <div className="ml-2 h-4 w-px bg-border/70" aria-hidden />
 
-          <button
-            onClick={() => navigate('/work/initiative-vault')}
+          <Link
+            to="/work/initiative-vault"
             className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
           >
             IV
-          </button>
-          <button
-            onClick={() => navigate('/work/athenahealth')}
+          </Link>
+          <Link
+            to="/work/athenahealth"
             className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
           >
             ATHENA
-          </button>
+          </Link>
         </nav>
 
         <button
@@ -120,24 +114,20 @@ export function Nav() {
             ))}
 
             <div className="mt-2 border-t border-border/70 pt-2">
-              <button
-                onClick={() => {
-                  navigate('/work/initiative-vault');
-                  setMobileOpen(false);
-                }}
-                className="py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
+              <Link
+                to="/work/initiative-vault"
+                onClick={() => setMobileOpen(false)}
+                className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
               >
                 Initiative Vault
-              </button>
-              <button
-                onClick={() => {
-                  navigate('/work/athenahealth');
-                  setMobileOpen(false);
-                }}
-                className="py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
+              </Link>
+              <Link
+                to="/work/athenahealth"
+                onClick={() => setMobileOpen(false)}
+                className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
               >
                 athenahealth
-              </button>
+              </Link>
             </div>
           </div>
         </div>
