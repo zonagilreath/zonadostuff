@@ -28,7 +28,7 @@ export function Contact() {
           <Reveal delayMs={220}>
             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
               <ButtonLink variant="primary" href={`mailto:${EMAIL}`}>
-                Email Me
+                Email
               </ButtonLink>
 
               <Button
