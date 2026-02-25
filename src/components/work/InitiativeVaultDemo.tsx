@@ -189,6 +189,14 @@ export function InitiativeVaultDemo() {
     cursorRef.current = cursor;
   }, [cursor]);
 
+  const updateCursor = (next: number | ((current: number) => number)) => {
+    setCursor((current) => {
+      const value = typeof next === 'function' ? next(current) : next;
+      cursorRef.current = value;
+      return value;
+    });
+  };
+
   const derived = useMemo(() => replay(INITIAL_STATE, events, cursor), [cursor, events]);
 
   const ordered = useMemo(() => {
@@ -213,13 +221,13 @@ export function InitiativeVaultDemo() {
       return [...base, nextEvent];
     });
 
-    setCursor(baseLen + 1);
+    updateCursor(baseLen + 1);
     setSelectedIndex(baseLen);
   };
 
   const reset = () => {
     setEvents(INITIAL_EVENTS);
-    setCursor(INITIAL_EVENTS.length);
+    updateCursor(INITIAL_EVENTS.length);
     setSelectedIndex(INITIAL_EVENTS.length - 1);
   };
 
@@ -275,7 +283,7 @@ export function InitiativeVaultDemo() {
               <Button
                 variant="secondary"
                 className="px-3 py-2 font-code text-[11px] tracking-[0.22em]"
-                onClick={() => setCursor((c) => Math.max(0, c - 1))}
+                onClick={() => updateCursor((c) => Math.max(0, c - 1))}
                 disabled={cursor === 0}
               >
                 Undo
@@ -283,7 +291,7 @@ export function InitiativeVaultDemo() {
               <Button
                 variant="secondary"
                 className="px-3 py-2 font-code text-[11px] tracking-[0.22em]"
-                onClick={() => setCursor((c) => Math.min(events.length, c + 1))}
+                onClick={() => updateCursor((c) => Math.min(events.length, c + 1))}
                 disabled={cursor === events.length}
               >
                 Redo
@@ -299,7 +307,7 @@ export function InitiativeVaultDemo() {
             value={cursor}
             onChange={(e) => {
               const next = Number(e.target.value);
-              setCursor(next);
+              updateCursor(next);
               setSelectedIndex(next ? next - 1 : null);
             }}
           />
