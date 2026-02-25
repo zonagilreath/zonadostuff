@@ -33,10 +33,9 @@ export function Hero() {
 
             <Reveal delayMs={240}>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">
-                I build production-ready web applications with React and TypeScript. From healthcare
-                platforms processing $2.5B in payments to event-sourced RPG systems, I specialize in
-                shipping clean, type-safe UIs and APIs fast—without sacrificing reliability. Available
-                for short-term contracts and freelance work.
+                I build production-ready web applications with React and TypeScript. From healthcare platforms processing
+                $2.5B in payments to event-sourced RPG systems, I specialize in shipping clean, type-safe UIs and APIs
+                fast—without sacrificing reliability. Available for short-term contracts and freelance work.
               </p>
             </Reveal>
 

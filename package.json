@@ -10,8 +10,12 @@
     "typecheck": "tsc -b --pretty false"
   },
   "dependencies": {
+    "@fontsource/instrument-sans": "^5.2.7",
+    "@fontsource/jetbrains-mono": "^5.2.7",
+    "@fontsource/space-mono": "^5.2.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -25,4 +29,3 @@
     "vite": "^6.0.0"
   }
 }
-

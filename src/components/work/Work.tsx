@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Container } from '../ui/Container';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
@@ -11,6 +12,7 @@ type Project = {
   description: string;
   tags: string[];
   metrics?: Array<{ value: string; label: string }>;
+  href?: string;
 };
 
 const projects: Project[] = [
@@ -36,7 +38,8 @@ const projects: Project[] = [
       { value: '100%', label: 'Type-safe coverage' },
       { value: '40%', label: 'Less state complexity' },
       { value: 'E2E', label: 'DB to UI type safety' }
-    ]
+    ],
+    href: '/work/initiative-vault'
   },
   {
     title: 'Patient Financial Products',
@@ -50,7 +53,8 @@ const projects: Project[] = [
       { value: '38%', label: 'CoF volume growth' },
       { value: '96%', label: 'Patient satisfaction' },
       { value: '15%', label: 'PPY increase' }
-    ]
+    ],
+    href: '/work/athenahealth'
   },
   {
     title: 'QA Platform Applications',
@@ -73,7 +77,7 @@ export function Work() {
         <div className="mt-10 flex flex-col gap-6">
           {projects.map((p, idx) => (
             <Reveal key={p.title} delayMs={idx * 90}>
-              <article className="group relative overflow-hidden border border-border/70 bg-surface/45 p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-glow">
+              <article className="group relative overflow-hidden border border-border/70 bg-surface/45 p-6 transition-transform duration-300 hover:-translate-y-1">
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent/0 transition-opacity duration-300 group-hover:bg-accent/70" />
 
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
@@ -107,6 +111,22 @@ export function Work() {
                   </div>
                 ) : null}
 
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  {p.href ? (
+                    <Link
+                      to={p.href}
+                      className="inline-flex items-center gap-2 border border-border/70 bg-bg/35 px-4 py-2 font-code text-[11px] font-semibold tracking-[0.22em] text-text transition-colors hover:border-accent/30"
+                    >
+                      READ CASE STUDY
+                      <span className="text-accent">↗</span>
+                    </Link>
+                  ) : (
+                    <span className="font-code text-[11px] tracking-[0.22em] text-muted">
+                      Case study coming later
+                    </span>
+                  )}
+                </div>
+
                 <div className="mt-5 flex flex-wrap gap-2">
                   {p.tags.map((t) => (
                     <Tag key={`${p.title}-${t}`}>{t}</Tag>
@@ -122,4 +142,3 @@ export function Work() {
     </section>
   );
 }
-
