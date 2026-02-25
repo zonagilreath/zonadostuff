@@ -5,7 +5,7 @@ import { useTyping } from '../../hooks/useTyping';
 import { CodeBlock } from '../code/CodeBlock';
 
 export function Hero() {
-  const { value } = useTyping('Full-Stack Engineer');
+  const { value } = useTyping('Full-Stack Engineer · Freelance & Contract');
 
   return (
     <section id="about" className="relative flex min-h-dvh scroll-mt-24 items-center pt-24">
@@ -33,9 +33,10 @@ export function Hero() {
 
             <Reveal delayMs={240}>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">
-                I build type-safe, scalable web applications with React and TypeScript. From healthcare
-                platforms processing $2.5B in payments to event-sourced RPG systems — I bring end-to-end
-                ownership and a sharp eye for developer experience.
+                I build production-ready web applications with React and TypeScript. From healthcare
+                platforms processing $2.5B in payments to event-sourced RPG systems, I specialize in
+                shipping clean, type-safe UIs and APIs fast—without sacrificing reliability. Available
+                for short-term contracts and freelance work.
               </p>
             </Reveal>
 
@@ -82,4 +83,3 @@ const engineer = {
 
 export default engineer;
 `;
-
