@@ -19,6 +19,15 @@ export default {
       },
       boxShadow: {
         glow: '0 0 0 1px rgba(110,231,183,0.25), 0 0 24px rgba(110,231,183,0.12)'
+      },
+      keyframes: {
+        blink: {
+          '0%, 49%': { opacity: '1' },
+          '50%, 100%': { opacity: '0' }
+        }
+      },
+      animation: {
+        blink: 'blink 1.05s step-end infinite'
       }
     }
   },

@@ -1,4 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useActiveSection } from '../../hooks/useActiveSection';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import { useScrolled } from '../../hooks/useScrolled';
 
 type SectionId = 'about' | 'work' | 'skills' | 'contact';
 
@@ -9,37 +12,17 @@ const navItems: Array<{ id: SectionId; label: string }> = [
   { id: 'contact', label: 'Contact' }
 ];
 
-function scrollToId(id: SectionId) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const scrolled = useScrolled(12);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [active, setActive] = useState<SectionId>('about');
+  const active = useActiveSection<SectionId>(['about', 'work', 'skills', 'contact'] as const);
 
-  // Temporary active tracking: basic scroll position heuristic.
-  // (Replaced later with IntersectionObserver-based active section tracking.)
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 12);
-      const ids: SectionId[] = ['about', 'work', 'skills', 'contact'];
-      const current =
-        ids
-          .map((id) => {
-            const el = document.getElementById(id);
-            if (!el) return null;
-            const rect = el.getBoundingClientRect();
-            return { id, top: rect.top };
-          })
-          .filter(Boolean)
-          .sort((a, b) => Math.abs(a!.top) - Math.abs(b!.top))[0]?.id ?? 'about';
-      setActive(current);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const scrollToId = (id: SectionId) => {
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+  };
 
   const containerClass = useMemo(() => {
     const base =

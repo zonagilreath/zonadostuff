@@ -1,4 +1,5 @@
 import { Container } from '../ui/Container';
+import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
 import { Tag } from '../ui/Tag';
 
@@ -64,51 +65,54 @@ export function Work() {
   return (
     <section id="work" className="py-20">
       <Container>
-        <SectionHeader label="▸ SELECTED WORK" title="Projects & Experience" />
+        <Reveal>
+          <SectionHeader label="▸ SELECTED WORK" title="Projects & Experience" />
+        </Reveal>
 
         <div className="mt-10 flex flex-col gap-6">
-          {projects.map((p) => (
-            <article
-              key={p.title}
-              className="group relative overflow-hidden border border-border/70 bg-surface/45 p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-glow"
-            >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent/0 transition-opacity duration-300 group-hover:bg-accent/70" />
+          {projects.map((p, idx) => (
+            <Reveal key={p.title} delayMs={idx * 90}>
+              <article className="group relative overflow-hidden border border-border/70 bg-surface/45 p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-glow">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-accent/0 transition-opacity duration-300 group-hover:bg-accent/70" />
 
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="font-heading text-2xl font-bold tracking-tight text-text">
-                  {p.title}
-                </h3>
-                <div className="font-code text-[11px] tracking-[0.22em] text-muted">
-                  {p.period}
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+                  <h3 className="font-heading text-2xl font-bold tracking-tight text-text">
+                    {p.title}
+                  </h3>
+                  <div className="font-code text-[11px] tracking-[0.22em] text-muted">
+                    {p.period}
+                  </div>
                 </div>
-              </div>
 
-              <div className="mt-1 text-sm font-semibold text-text/90">{p.role}</div>
+                <div className="mt-1 text-sm font-semibold text-text/90">{p.role}</div>
 
-              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">{p.description}</p>
+                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
+                  {p.description}
+                </p>
 
-              {p.metrics?.length ? (
-                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                  {p.metrics.map((m) => (
-                    <div
-                      key={`${p.title}-${m.label}`}
-                      className="border border-border/70 bg-bg/35 px-3 py-2"
-                    >
-                      <div className="font-heading text-lg font-bold text-text">{m.value}</div>
-                      <div className="mt-0.5 font-code text-[10px] tracking-[0.22em] text-muted">
-                        {m.label}
+                {p.metrics?.length ? (
+                  <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                    {p.metrics.map((m) => (
+                      <div
+                        key={`${p.title}-${m.label}`}
+                        className="border border-border/70 bg-bg/35 px-3 py-2"
+                      >
+                        <div className="font-heading text-lg font-bold text-text">{m.value}</div>
+                        <div className="mt-0.5 font-code text-[10px] tracking-[0.22em] text-muted">
+                          {m.label}
+                        </div>
                       </div>
-                    </div>
+                    ))}
+                  </div>
+                ) : null}
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {p.tags.map((t) => (
+                    <Tag key={`${p.title}-${t}`}>{t}</Tag>
                   ))}
                 </div>
-              ) : null}
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {p.tags.map((t) => (
-                  <Tag key={`${p.title}-${t}`}>{t}</Tag>
-                ))}
-              </div>
-            </article>
+              </article>
+            </Reveal>
           ))}
         </div>
       </Container>
