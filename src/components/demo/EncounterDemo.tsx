@@ -7,23 +7,51 @@ interface Combatant {
   initiative: number;
   hp: number;
   maxHp: number;
-  ac: number;
-  conditions: string[];
 }
 
-const INITIAL_COMBATANTS: Combatant[] = [
-  { id: 1, name: 'Adult Bronze Dragon', initiative: 17, hp: 212, maxHp: 212, ac: 19, conditions: [] },
-  { id: 2, name: 'Aboleth', initiative: 10, hp: 135, maxHp: 135, ac: 17, conditions: ['Restrained'] },
-  { id: 3, name: 'Party Barbarian', initiative: 8, hp: 68, maxHp: 95, ac: 15, conditions: [] },
-  { id: 4, name: 'Archfey Warlock', initiative: 5, hp: 52, maxHp: 52, ac: 13, conditions: [] },
-];
+type Phase = 'setup' | 'combat';
 
 export function EncounterDemo() {
-  const [combatants, setCombatants] = useState<Combatant[]>(INITIAL_COMBATANTS);
-  const [selectedId, setSelectedId] = useState<number>(2);
-  const [round, setRound] = useState(2);
+  const [phase, setPhase] = useState<Phase>('setup');
+  const [combatants, setCombatants] = useState<Combatant[]>([]);
+  const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
+  const [round, setRound] = useState(1);
+  const [nameInput, setNameInput] = useState('');
 
-  const selected = combatants.find(c => c.id === selectedId);
+  const rollInitiative = () => Math.floor(Math.random() * 20) + 1;
+  const rollHP = () => Math.floor(Math.random() * 50) + 30; // 30-80 HP
+
+  const addCombatant = () => {
+    if (!nameInput.trim()) return;
+    
+    const newCombatant: Combatant = {
+      id: Date.now(),
+      name: nameInput.trim(),
+      initiative: rollInitiative(),
+      hp: rollHP(),
+      maxHp: rollHP(),
+    };
+
+    setCombatants(prev => [...prev, newCombatant].sort((a, b) => b.initiative - a.initiative));
+    setNameInput('');
+  };
+
+  const startCombat = () => {
+    if (combatants.length < 2) return;
+    setPhase('combat');
+    setCurrentTurnIndex(0);
+    setRound(1);
+  };
+
+  const nextTurn = () => {
+    if (currentTurnIndex === combatants.length - 1) {
+      // End of round, loop back to start
+      setCurrentTurnIndex(0);
+      setRound(r => r + 1);
+    } else {
+      setCurrentTurnIndex(i => i + 1);
+    }
+  };
 
   const adjustHp = (id: number, delta: number) => {
     setCombatants(prev => prev.map(c => 
@@ -33,20 +61,28 @@ export function EncounterDemo() {
     ));
   };
 
-  const toggleCondition = (id: number, condition: string) => {
-    setCombatants(prev => prev.map(c => 
-      c.id === id 
-        ? { 
-            ...c, 
-            conditions: c.conditions.includes(condition)
-              ? c.conditions.filter(cond => cond !== condition)
-              : [...c.conditions, condition]
-          }
-        : c
-    ));
+  const removeCombatant = (id: number) => {
+    setCombatants(prev => {
+      const newList = prev.filter(c => c.id !== id);
+      if (newList.length < 2) {
+        setPhase('setup');
+        setCurrentTurnIndex(0);
+      } else if (currentTurnIndex >= newList.length) {
+        setCurrentTurnIndex(0);
+      }
+      return newList;
+    });
   };
 
-  if (!selected) return null;
+  const reset = () => {
+    setCombatants([]);
+    setPhase('setup');
+    setCurrentTurnIndex(0);
+    setRound(1);
+    setNameInput('');
+  };
+
+  const currentCombatant = phase === 'combat' ? combatants[currentTurnIndex] : null;
 
   return (
     <section className="relative py-16 sm:py-24">
@@ -59,142 +95,217 @@ export function EncounterDemo() {
         <Reveal delayMs={80}>
           <p className="text-muted text-sm sm:text-base max-w-2xl mb-8">
             A professional D&D encounter tracker built with React 19, TypeScript, tRPC, and PostgreSQL.
-            Tap a combatant below to view details.
+            Try the full workflow: add combatants, roll initiative, track turns.
           </p>
         </Reveal>
 
         <Reveal delayMs={160}>
           <div className="max-w-lg mx-auto">
-            {/* Combat Snapshot Card */}
+            {/* Combat Card */}
             <div className="panel-card">
               {/* Header */}
-              <div className="flex items-center justify-between w-full pb-2 border-b border-border">
-                <h3 className="text-sm font-code text-muted uppercase tracking-wider">Combat Snapshot</h3>
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 bg-muted-bg rounded text-xs font-code text-text">Round {round}</span>
+              <div className="flex items-center justify-between w-full pb-3 border-b border-border">
+                <h3 className="text-sm font-code text-muted uppercase tracking-wider">
+                  {phase === 'setup' ? 'Setup Encounter' : `Combat - Round ${round}`}
+                </h3>
+                {combatants.length > 0 && (
                   <button
-                    onClick={() => setRound(r => r + 1)}
-                    className="px-2.5 py-1 bg-accent hover:bg-accent/90 text-surface text-xs font-code font-semibold rounded transition-colors"
+                    onClick={reset}
+                    className="px-2.5 py-1 bg-muted-bg hover:bg-destructive/20 text-muted hover:text-destructive text-xs font-code rounded transition-colors"
                   >
-                    Next
+                    Reset
                   </button>
-                </div>
+                )}
               </div>
 
-              {/* Initiative Order Chips */}
-              <div className="w-full">
-                <div className="text-[11px] font-code text-muted uppercase tracking-wider mb-2">Initiative Order</div>
-                <div className="flex flex-wrap gap-2">
-                  {combatants.map((combatant) => (
-                    <button
-                      key={combatant.id}
-                      onClick={() => setSelectedId(combatant.id)}
-                      className={`
-                        flex items-center gap-2 px-3 py-1.5 rounded-md transition-all font-code text-sm
-                        ${
-                          combatant.id === selectedId
-                            ? 'bg-accent/15 border border-accent/60 text-accent'
-                            : 'bg-muted-bg border border-transparent text-muted hover:bg-muted-bg hover:text-text'
-                        }
-                      `}
-                    >
-                      <span className="font-semibold">{combatant.initiative}</span>
-                      <span className="truncate max-w-[140px]">{combatant.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              {/* Setup Phase */}
+              {phase === 'setup' && (
+                <div className="w-full space-y-4">
+                  <div>
+                    <label className="block text-xs font-code text-muted uppercase tracking-wider mb-2">
+                      Add Combatant
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={nameInput}
+                        onChange={(e) => setNameInput(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && addCombatant()}
+                        placeholder="Character or monster name"
+                        className="flex-1 px-3 py-2 bg-surface border border-border rounded-md text-text text-sm font-code placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/50"
+                      />
+                      <button
+                        onClick={addCombatant}
+                        className="px-4 py-2 bg-accent hover:bg-accent/90 text-surface text-sm font-code font-semibold rounded-md transition-colors whitespace-nowrap"
+                      >
+                        + Add
+                      </button>
+                    </div>
+                    <p className="mt-1.5 text-xs text-muted/70">
+                      Initiative will be rolled automatically (d20)
+                    </p>
+                  </div>
 
-              {/* Featured Combatant Details */}
-              <div className="w-full pt-3 border-t border-border">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-lg font-medium text-text truncate">{selected.name}</h4>
-                  {selected.conditions.length > 0 && (
-                    <div className="px-2 py-0.5 bg-accent/20 rounded text-accent text-xs font-code">
-                      {selected.conditions[0]}
+                  {/* Added Combatants List */}
+                  {combatants.length > 0 && (
+                    <div>
+                      <div className="text-xs font-code text-muted uppercase tracking-wider mb-2">
+                        Combatants ({combatants.length})
+                      </div>
+                      <div className="space-y-2">
+                        {combatants.map((combatant) => (
+                          <div
+                            key={combatant.id}
+                            className="flex items-center gap-3 px-3 py-2 bg-muted-bg rounded-md"
+                          >
+                            <div className="flex items-center justify-center w-8 h-8 bg-surface rounded text-accent font-code text-sm font-semibold">
+                              {combatant.initiative}
+                            </div>
+                            <div className="flex-1 text-sm text-text truncate">{combatant.name}</div>
+                            <button
+                              onClick={() => removeCombatant(combatant.id)}
+                              className="text-muted hover:text-destructive transition-colors text-sm"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
-                </div>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div className="stat-badge flex-col py-2">
-                    <div className="text-[11px] text-muted font-code uppercase tracking-wider">AC</div>
-                    <div className="stat-badge-text font-code text-lg">{selected.ac}</div>
-                  </div>
-                  <div className="stat-badge flex-col py-2">
-                    <div className="text-[11px] text-muted font-code uppercase tracking-wider">HP</div>
-                    <div className="stat-badge-text font-code text-lg">{selected.hp}</div>
-                  </div>
-                  <div className="stat-badge flex-col py-2">
-                    <div className="text-[11px] text-muted font-code uppercase tracking-wider">Init</div>
-                    <div className="stat-badge-text font-code text-lg">{selected.initiative}</div>
-                  </div>
-                </div>
+                  {/* Start Combat Button */}
+                  {combatants.length >= 2 && (
+                    <button
+                      onClick={startCombat}
+                      className="w-full py-3 bg-accent hover:bg-accent/90 text-surface font-code text-sm font-semibold rounded-lg transition-colors"
+                    >
+                      Start Combat →
+                    </button>
+                  )}
 
-                {/* HP Bar */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-code text-muted">Hit Points</span>
-                    <span className="text-xs font-code text-text">{selected.hp} / {selected.maxHp}</span>
-                  </div>
-                  <div className="w-full h-2 bg-muted-bg rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-accent transition-all duration-300"
-                      style={{ width: `${(selected.hp / selected.maxHp) * 100}%` }}
-                    />
-                  </div>
-                  <div className="flex items-center gap-2 mt-3">
-                    <button
-                      onClick={() => adjustHp(selected.id, -10)}
-                      className="flex-1 h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-destructive/20 text-text hover:text-destructive transition-colors font-code text-sm font-semibold"
-                    >
-                      -10
-                    </button>
-                    <button
-                      onClick={() => adjustHp(selected.id, -5)}
-                      className="flex-1 h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-destructive/20 text-text hover:text-destructive transition-colors font-code text-sm font-semibold"
-                    >
-                      -5
-                    </button>
-                    <button
-                      onClick={() => adjustHp(selected.id, 5)}
-                      className="flex-1 h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-accent/20 text-text hover:text-accent transition-colors font-code text-sm font-semibold"
-                    >
-                      +5
-                    </button>
-                    <button
-                      onClick={() => adjustHp(selected.id, 10)}
-                      className="flex-1 h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-accent/20 text-text hover:text-accent transition-colors font-code text-sm font-semibold"
-                    >
-                      +10
-                    </button>
-                  </div>
+                  {combatants.length === 1 && (
+                    <p className="text-xs text-muted/70 text-center">
+                      Add at least one more combatant to start combat
+                    </p>
+                  )}
                 </div>
+              )}
 
-                {/* Conditions */}
-                <div>
-                  <div className="text-[11px] font-code text-muted uppercase tracking-wider mb-2">Conditions</div>
-                  <div className="flex flex-wrap gap-2">
-                    {['Restrained', 'Poisoned', 'Prone'].map(condition => (
+              {/* Combat Phase */}
+              {phase === 'combat' && currentCombatant && (
+                <div className="w-full space-y-4">
+                  {/* Initiative Order */}
+                  <div>
+                    <div className="text-xs font-code text-muted uppercase tracking-wider mb-2">
+                      Initiative Order
+                    </div>
+                    <div className="space-y-2">
+                      {combatants.map((combatant, index) => (
+                        <div
+                          key={combatant.id}
+                          className={`
+                            flex items-center gap-3 px-3 py-2 rounded-md transition-all
+                            ${
+                              index === currentTurnIndex
+                                ? 'bg-accent/15 border-2 border-accent/60'
+                                : 'bg-muted-bg border-2 border-transparent'
+                            }
+                          `}
+                        >
+                          <div className={`
+                            flex items-center justify-center w-8 h-8 rounded font-code text-sm font-semibold
+                            ${index === currentTurnIndex ? 'bg-accent text-surface' : 'bg-surface text-accent'}
+                          `}>
+                            {combatant.initiative}
+                          </div>
+                          <div className="flex-1">
+                            <div className={`text-sm truncate ${index === currentTurnIndex ? 'text-accent font-medium' : 'text-text'}`}>
+                              {combatant.name}
+                            </div>
+                            <div className="text-xs font-code text-muted">
+                              {combatant.hp}/{combatant.maxHp} HP
+                            </div>
+                          </div>
+                          {index === currentTurnIndex && (
+                            <div className="px-2 py-0.5 bg-accent text-surface text-[10px] font-code font-semibold rounded uppercase">
+                              Active
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Current Turn Controls */}
+                  <div className="pt-3 border-t border-border">
+                    <div className="text-xs font-code text-muted uppercase tracking-wider mb-3">
+                      {currentCombatant.name}'s Turn
+                    </div>
+
+                    {/* HP Bar */}
+                    <div className="mb-3">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-code text-muted">Hit Points</span>
+                        <span className="text-xs font-code text-text">
+                          {currentCombatant.hp} / {currentCombatant.maxHp}
+                        </span>
+                      </div>
+                      <div className="w-full h-2 bg-surface rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-accent transition-all duration-300"
+                          style={{ width: `${(currentCombatant.hp / currentCombatant.maxHp) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* HP Controls */}
+                    <div className="grid grid-cols-4 gap-2 mb-3">
                       <button
-                        key={condition}
-                        onClick={() => toggleCondition(selected.id, condition)}
-                        className={`
-                          px-3 py-1.5 rounded-md text-xs font-code transition-colors
-                          ${
-                            selected.conditions.includes(condition)
-                              ? 'bg-accent text-surface'
-                              : 'bg-muted-bg text-muted hover:bg-accent/20 hover:text-accent'
-                          }
-                        `}
+                        onClick={() => adjustHp(currentCombatant.id, -10)}
+                        className="h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-destructive/20 text-text hover:text-destructive transition-colors font-code text-sm font-semibold"
                       >
-                        {condition}
+                        -10
                       </button>
-                    ))}
+                      <button
+                        onClick={() => adjustHp(currentCombatant.id, -5)}
+                        className="h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-destructive/20 text-text hover:text-destructive transition-colors font-code text-sm font-semibold"
+                      >
+                        -5
+                      </button>
+                      <button
+                        onClick={() => adjustHp(currentCombatant.id, 5)}
+                        className="h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-accent/20 text-text hover:text-accent transition-colors font-code text-sm font-semibold"
+                      >
+                        +5
+                      </button>
+                      <button
+                        onClick={() => adjustHp(currentCombatant.id, 10)}
+                        className="h-9 flex items-center justify-center rounded-md bg-muted-bg hover:bg-accent/20 text-text hover:text-accent transition-colors font-code text-sm font-semibold"
+                      >
+                        +10
+                      </button>
+                    </div>
+
+                    {/* Next Turn / Remove */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={nextTurn}
+                        className="flex-1 py-2.5 bg-accent hover:bg-accent/90 text-surface font-code text-sm font-semibold rounded-md transition-colors"
+                      >
+                        {currentTurnIndex === combatants.length - 1 ? 'Next Round →' : 'Next Turn →'}
+                      </button>
+                      <button
+                        onClick={() => removeCombatant(currentCombatant.id)}
+                        className="px-3 py-2.5 bg-muted-bg hover:bg-destructive/20 text-muted hover:text-destructive font-code text-sm rounded-md transition-colors"
+                        title="Remove combatant"
+                      >
+                        ✕
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Links */}
