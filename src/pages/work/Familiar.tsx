@@ -20,7 +20,38 @@ function SectionTitle({ label, title }: { label: string; title: string }) {
   );
 }
 
+function EmbeddedDemo({ src }: { src: string }) {
+  return (
+    <div className="mt-8 overflow-hidden rounded-lg border border-border/70 bg-bg/20">
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-bg/35 px-4 py-3">
+        <div className="font-code text-xs tracking-[0.22em] text-muted">EMBEDDED DEMO</div>
+        <a
+          className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          href={src}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open in new tab ↗
+        </a>
+      </div>
+
+      <div className="aspect-[16/10] w-full">
+        <iframe
+          title="Familiar embedded demo"
+          src={src}
+          className="h-full w-full"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function FamiliarCaseStudy() {
+  const live = 'https://familiar-encounters.vercel.app/';
+
   return (
     <section className="pt-28 pb-20">
       <Container>
@@ -39,7 +70,7 @@ export function FamiliarCaseStudy() {
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href="https://familiar-encounters.vercel.app/"
+              href={live}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-5 py-3 font-code text-sm font-semibold text-bg transition-colors hover:bg-accent/90"
@@ -73,6 +104,8 @@ export function FamiliarCaseStudy() {
             <Tag>Tool calling</Tag>
           </div>
         </div>
+
+        <EmbeddedDemo src={live} />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
           <article className="max-w-3xl">
@@ -143,7 +176,7 @@ export function FamiliarCaseStudy() {
               </div>
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
                 <div className="font-code text-[10px] tracking-[0.22em] text-muted">NOTE</div>
-                <div className="mt-1 text-text">Hobby project, production-style rigor</div>
+                <div className="mt-1 text-text">Embedded demo enabled</div>
               </div>
             </div>
           </aside>
