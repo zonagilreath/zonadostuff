@@ -20,7 +20,38 @@ function SectionTitle({ label, title }: { label: string; title: string }) {
   );
 }
 
-export function InitiativeVaultCaseStudy() {
+function EmbeddedDemo({ src }: { src: string }) {
+  return (
+    <div className="mt-8 overflow-hidden rounded-lg border border-border/70 bg-bg/20">
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-bg/35 px-4 py-3">
+        <div className="font-code text-xs tracking-[0.22em] text-muted">EMBEDDED DEMO</div>
+        <a
+          className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          href={src}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open in new tab ↗
+        </a>
+      </div>
+
+      <div className="aspect-[16/10] w-full">
+        <iframe
+          title="Familiar embedded demo"
+          src={src}
+          className="h-full w-full"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads"
+        />
+      </div>
+    </div>
+  );
+}
+
+export function FamiliarCaseStudy() {
+  const live = 'https://familiar-encounters.vercel.app/';
+
   return (
     <section className="pt-28 pb-20">
       <Container>
@@ -28,18 +59,18 @@ export function InitiativeVaultCaseStudy() {
           <div className="font-code text-xs tracking-[0.22em] text-muted">CASE STUDY</div>
 
           <h1 className="mt-4 font-heading text-4xl font-bold tracking-tight text-text sm:text-5xl">
-            Initiative Vault
+            Familiar
           </h1>
 
           <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
-            Initiative Vault is a tabletop RPG combat tracker built around one idea: speed at the table.
-            The work centers on clear workflows, low-friction interaction patterns, and an interface that
-            stays readable mid-combat.
+            Familiar is an AI-powered D&D 5e encounter generator for dungeon masters. It takes optional
+            form input and produces a structured, ready-to-run encounter sheet: goal and stakes up top,
+            then setup, then type-specific content like rosters, puzzles, NPC profiles, and traps.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href="https://initiative-vault.vercel.app"
+              href={live}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-5 py-3 font-code text-sm font-semibold text-bg transition-colors hover:bg-accent/90"
@@ -48,7 +79,7 @@ export function InitiativeVaultCaseStudy() {
               <span aria-hidden>↗</span>
             </a>
             <a
-              href="https://github.com/gelatinous-labs/initiative-vault"
+              href="https://github.com/zonagilreath/familiar"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 border border-border/70 bg-bg/35 px-5 py-3 font-code text-sm font-semibold text-text transition-colors hover:border-accent/30"
@@ -66,66 +97,66 @@ export function InitiativeVaultCaseStudy() {
           </div>
 
           <div className="mt-10 flex flex-wrap gap-2">
-            <Tag>React</Tag>
+            <Tag>Next.js</Tag>
             <Tag>TypeScript</Tag>
-            <Tag>Interaction design</Tag>
-            <Tag>Workflow UX</Tag>
+            <Tag>Gemini</Tag>
+            <Tag>Structured JSON</Tag>
+            <Tag>Tool calling</Tag>
           </div>
         </div>
+
+        <EmbeddedDemo src={live} />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
           <article className="max-w-3xl">
             <div className="space-y-10">
               <section>
-                <SectionTitle label="01" title="Context" />
+                <SectionTitle label="01" title="Constraints" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    Combat tracking tools often fail in the moment they’re needed most: they bury the
-                    important information under configuration, modal flows, and dense layouts.
+                    The core constraint is output quality under uncertainty: everything in the form is
+                    optional, but the result still needs to be a complete encounter a DM can run.
                   </p>
                   <p>
-                    Initiative Vault focuses on a tight combat loop and an interface that can be read at a
-                    glance. The goal is to reduce cognitive load while still supporting real play.
+                    The second constraint is reliability: the UI should render from structured data rather
+                    than parsing freeform text.
                   </p>
                 </div>
               </section>
 
               <section>
-                <SectionTitle label="02" title="Product decisions" />
+                <SectionTitle label="02" title="Generation pipeline" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The UI is designed around a small set of high-frequency actions: advancing turns,
-                    updating HP, and tracking conditions. Anything else is secondary.
+                    The request flow is designed as a predictable pipeline: the server assembles a
+                    deterministic prompt from the form input, calls the model with a cached SRD context,
+                    and uses tool calling to fetch creatures and spells on demand.
                   </p>
                   <p>
-                    The layout favors stable placement (so a user’s eyes don’t hunt) and clear hierarchy
-                    (so the active combatant and the next action are always obvious).
+                    The model returns JSON matching a discriminated union. The response is validated and
+                    then rendered as a run sheet optimized for at-the-table scanning.
                   </p>
                 </div>
               </section>
 
               <section>
-                <SectionTitle label="03" title="Implementation notes" />
+                <SectionTitle label="03" title="SRD strategy" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The frontend is built to keep state transitions explicit and debuggable. Components are
-                    structured around composition and predictable props so the feature set can expand
-                    without turning the UI into a pile of exceptions.
-                  </p>
-                  <p>
-                    The design system is deliberately small — a few primitives, consistent spacing, and
-                    typography that supports scanning.
+                    The SRD is split into two tiers: a smaller inline context (rules and guidelines) that
+                    stays cached, and a larger tool-backed dataset for creatures and spells. This keeps the
+                    context window manageable while still letting the model pull specific stat blocks.
                   </p>
                 </div>
               </section>
 
               <section>
-                <SectionTitle label="04" title="What’s next" />
+                <SectionTitle label="04" title="Tradeoffs" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The next phase is deepening the workflow coverage while keeping the core loop fast:
-                    more encounter tools, better collaboration, and smarter defaults so the app stays
-                    approachable.
+                    The generation endpoint buffers a complete JSON response rather than streaming partial
+                    text. That choice simplifies the client and improves reliability, at the cost of a
+                    longer wait before the first pixels update.
                   </p>
                 </div>
               </section>
@@ -136,16 +167,16 @@ export function InitiativeVaultCaseStudy() {
             <div className="font-code text-[11px] tracking-[0.22em] text-muted">AT A GLANCE</div>
             <div className="mt-4 space-y-3 text-sm leading-relaxed text-muted">
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
-                <div className="font-code text-[10px] tracking-[0.22em] text-muted">ROLE</div>
-                <div className="mt-1 text-text">Builder / designer</div>
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">THEME</div>
+                <div className="mt-1 text-text">Thoughtful AI integration</div>
               </div>
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
-                <div className="font-code text-[10px] tracking-[0.22em] text-muted">FOCUS</div>
-                <div className="mt-1 text-text">UI workflows · maintainability</div>
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">OUTPUT</div>
+                <div className="mt-1 text-text">Structured encounter run sheet</div>
               </div>
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
-                <div className="font-code text-[10px] tracking-[0.22em] text-muted">NOTES</div>
-                <div className="mt-1 text-text">No metrics yet (early product)</div>
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">NOTE</div>
+                <div className="mt-1 text-text">Embedded demo enabled</div>
               </div>
             </div>
           </aside>

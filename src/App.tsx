@@ -5,6 +5,7 @@ import { ScrollToHash } from './components/routing/ScrollToHash';
 import { Home } from './pages/Home';
 import { InitiativeVaultCaseStudy } from './pages/work/InitiativeVault';
 import { AthenahealthCaseStudy } from './pages/work/Athenahealth';
+import { FamiliarCaseStudy } from './pages/work/Familiar';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/work/initiative-vault" element={<InitiativeVaultCaseStudy />} />
           <Route path="/work/athenahealth" element={<AthenahealthCaseStudy />} />
+          <Route path="/work/familiar" element={<FamiliarCaseStudy />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
