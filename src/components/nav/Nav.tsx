@@ -4,12 +4,11 @@ import { useActiveSection } from '../../hooks/useActiveSection';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { useScrolled } from '../../hooks/useScrolled';
 
-type SectionId = 'about' | 'work' | 'skills' | 'contact';
+type SectionId = 'about' | 'work' | 'contact';
 
 const navItems: Array<{ id: SectionId; label: string }> = [
   { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
-  { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' }
 ];
 
@@ -21,7 +20,7 @@ export function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const active = useActiveSection<SectionId>(['about', 'work', 'skills', 'contact'] as const);
+  const active = useActiveSection<SectionId>(['about', 'work', 'contact'] as const);
 
   const scrollToId = (id: SectionId) => {
     if (location.pathname !== '/') {
@@ -77,6 +76,12 @@ export function Nav() {
             IV
           </Link>
           <Link
+            to="/work/familiar"
+            className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          >
+            FAMILIAR
+          </Link>
+          <Link
             to="/work/athenahealth"
             className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
           >
@@ -120,6 +125,13 @@ export function Nav() {
                 className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
               >
                 Initiative Vault
+              </Link>
+              <Link
+                to="/work/familiar"
+                onClick={() => setMobileOpen(false)}
+                className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
+              >
+                Familiar
               </Link>
               <Link
                 to="/work/athenahealth"
