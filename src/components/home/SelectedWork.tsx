@@ -19,6 +19,12 @@ const work: WorkItem[] = [
     blurb: 'Enterprise-scale healthcare software: systems design, reliability, and iterative delivery.',
     highlights: ['Type-safe frontend patterns', 'API contracts and DX', 'Quality + automation'],
     href: '/work/athenahealth'
+  },
+  {
+    title: 'Familiar',
+    blurb: 'AI-powered D&D 5e encounter generator that produces structured, table-ready run sheets.',
+    highlights: ['Deterministic prompt assembly', 'Gemini context caching', 'Local tool-calling over SRD data'],
+    href: '/work/familiar'
   }
 ];
 
@@ -31,7 +37,7 @@ export function SelectedWork() {
             <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
               Selected work
             </h2>
-            <div className="font-code text-xs tracking-[0.22em] text-muted">2 CASE STUDIES</div>
+            <div className="font-code text-xs tracking-[0.22em] text-muted">3 CASE STUDIES</div>
           </div>
 
           <div className="mt-8 border-t border-border/70">
