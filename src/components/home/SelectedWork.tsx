@@ -9,21 +9,24 @@ type WorkItem = {
 
 const work: WorkItem[] = [
   {
-    title: 'Initiative Vault',
-    blurb: 'A tabletop RPG combat tracker with a focus on speed, clarity, and low-friction flows.',
-    highlights: ['React + TypeScript UI system', 'Stateful workflows and UX polish', 'Built for real table use'],
-    href: '/work/initiative-vault'
-  },
-  {
     title: 'athenahealth',
-    blurb: 'Enterprise-scale healthcare software: systems design, reliability, and iterative delivery.',
-    highlights: ['Type-safe frontend patterns', 'API contracts and DX', 'Quality + automation'],
+    blurb:
+      'Lead engineer on patient financial products serving 30M monthly active users. Shipped Card on File, Payment Plans, and Prepayment — directly contributing to $2.5B in annual payments processed.',
+    highlights: ['$2.5B annual payment volume', '30M monthly active users', 'Apollo GraphQL · React · TypeScript'],
     href: '/work/athenahealth'
   },
   {
+    title: 'Initiative Vault',
+    blurb:
+      'Founding engineer on a professional-grade tabletop RPG encounter manager. Built the full stack from scratch: event-sourced state, tRPC API, PostgreSQL with RLS auth, and a CI/CD pipeline.',
+    highlights: ['Event-sourced architecture', 'tRPC + Zod · Prisma · Supabase', 'Railway + Vercel deploy'],
+    href: '/work/initiative-vault'
+  },
+  {
     title: 'Familiar',
-    blurb: 'AI-powered D&D 5e encounter generator that produces structured, table-ready run sheets.',
-    highlights: ['Deterministic prompt assembly', 'Gemini context caching', 'Local tool-calling over SRD data'],
+    blurb:
+      'An experiment in AI-assisted D&D encounter generation. Explores where LLMs genuinely add value as a supplement — not a replacement — for the human side of running a table. Uses RAG, MCP, and Gemini context caching.',
+    highlights: ['RAG + MCP architecture', 'Gemini context caching', 'Local tool-calling over SRD data'],
     href: '/work/familiar'
   }
 ];
