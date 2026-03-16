@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 
-// Screenshot paths — drop the matching files into /public/images/iv/ to activate.
-// Filenames: iv-01-overview.jpg, iv-02-timeline.jpg, iv-03-spells.jpg, iv-04-features.jpg
 const SCREENSHOTS = {
-  overview: '/images/iv/iv-01-overview.jpg',
-  timeline: '/images/iv/iv-02-timeline.jpg',
-  spells:   '/images/iv/iv-03-spells.jpg',
-  features: '/images/iv/iv-04-features.jpg',
+  overview: '/images/iv-01-overview.png',
+  timeline: '/images/iv-02-timeline.png',
+  spells:   '/images/iv-03-spells.png',
+  features: '/images/iv-04-features.png',
 } as const;
 
 function Tag({ children }: { children: string }) {
