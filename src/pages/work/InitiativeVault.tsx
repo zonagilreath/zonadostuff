@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 
-import screenshot01 from '../../assets/iv-01-overview.jpg';
-import screenshot02 from '../../assets/iv-02-timeline.jpg';
-import screenshot03 from '../../assets/iv-03-spells.jpg';
-import screenshot04 from '../../assets/iv-04-features.jpg';
+// Screenshot paths — drop the matching files into /public/images/iv/ to activate.
+// Filenames: iv-01-overview.jpg, iv-02-timeline.jpg, iv-03-spells.jpg, iv-04-features.jpg
+const SCREENSHOTS = {
+  overview: '/images/iv/iv-01-overview.jpg',
+  timeline: '/images/iv/iv-02-timeline.jpg',
+  spells:   '/images/iv/iv-03-spells.jpg',
+  features: '/images/iv/iv-04-features.jpg',
+} as const;
 
 function Tag({ children }: { children: string }) {
   return (
@@ -113,7 +117,7 @@ export function InitiativeVaultCaseStudy() {
         </div>
 
         <Screenshot
-          src={screenshot01}
+          src={SCREENSHOTS.overview}
           alt="Initiative Vault overview: three-panel layout showing encounter list, monster detail card, and dice roller"
           caption="Overview — encounter order, monster stat block, compendium search, and dice roller in one screen"
         />
@@ -126,7 +130,7 @@ export function InitiativeVaultCaseStudy() {
                 <SectionTitle label="01" title="Context and scope" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    Most combat trackers fail at the moment they're needed most: mid-fight, under time
+                    Most combat trackers fail at the moment they’re needed most: mid-fight, under time
                     pressure, with a table full of people waiting on you. They bury the important
                     information under configuration, modal flows, and dense layouts designed for setup,
                     not play.
@@ -137,7 +141,7 @@ export function InitiativeVaultCaseStudy() {
                     a keystroke or click away but never in the way.
                   </p>
                   <p>
-                    I'm building this as founding engineer at Gelatinous Labs, responsible for the
+                    I’m building this as founding engineer at Gelatinous Labs, responsible for the
                     full stack: schema design, API layer, auth model, UI system, and deployment
                     infrastructure.
                   </p>
@@ -167,7 +171,7 @@ export function InitiativeVaultCaseStudy() {
                 </div>
 
                 <Screenshot
-                  src={screenshot02}
+                  src={SCREENSHOTS.timeline}
                   alt="Encounter timeline rewound to a past state, showing HP values and conditions at that point in the fight"
                   caption="Rewinding the encounter timeline — HP deltas and conditions recomputed from the event log at any prior state"
                 />
@@ -198,9 +202,9 @@ export function InitiativeVaultCaseStudy() {
                     feats, and equipment.
                   </p>
                   <p>
-                    On top of that schema sits an action economy system. It derives "action grants"
+                    On top of that schema sits an action economy system. It derives “action grants”
                     from categorical definitions — class feature sets, monster stat blocks — and then
-                    compiles those grants with a specific combatant's particulars: their actual
+                    compiles those grants with a specific combatant’s particulars: their actual
                     level, equipment, and any customized stats. The result is a runtime menu of
                     available actions and abilities for each participant, built fresh per combatant
                     rather than hard-coded per type.
@@ -214,7 +218,7 @@ export function InitiativeVaultCaseStudy() {
                 </div>
 
                 <Screenshot
-                  src={screenshot04}
+                  src={SCREENSHOTS.features}
                   alt="Wild Shape class feature panel showing Beast Shapes table and rules text rendered from structured SRD data"
                   caption="Class feature panel — tabular rules and prose rendered from the same structured SRD schema, not hard-coded markup"
                 />
@@ -230,14 +234,14 @@ export function InitiativeVaultCaseStudy() {
                     slots in the same interaction.
                   </p>
                   <p>
-                    Keyboard navigation is implemented for the primary flows and we're targeting full
+                    Keyboard navigation is implemented for the primary flows and we’re targeting full
                     keyboard-only operation by general availability, so the app works at a physical
                     table without needing to hand off a mouse.
                   </p>
                 </div>
 
                 <Screenshot
-                  src={screenshot03}
+                  src={SCREENSHOTS.spells}
                   alt="Spell manager modal showing Library and Prepared tabs, spell search, and spell detail panel"
                   caption="Spell manager — library, prepared list, and rule text in one modal, optimized for mid-session lookup"
                 />
@@ -264,12 +268,12 @@ export function InitiativeVaultCaseStudy() {
               </section>
 
               <section>
-                <SectionTitle label="06" title="What's next" />
+                <SectionTitle label="06" title="What’s next" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
                     Currently in private beta. The next phase focuses on full keyboard-only
                     navigation, multi-user session sync over WebSockets, and expanding encounter
-                    tooling — all without compromising the core loop's speed and legibility.
+                    tooling — all without compromising the core loop’s speed and legibility.
                   </p>
                 </div>
               </section>
