@@ -8,15 +8,16 @@ export function HomeContact() {
     <section id="contact" className="scroll-mt-24 py-20">
       <Container>
         <div className="max-w-3xl">
-          <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">Contact</h2>
+          <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">Let's work together</h2>
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
-            If you’re hiring or you have a project that needs a calm, senior-ish builder, email is best.
+            I'm available for freelance and contract engagements — React, TypeScript, full-stack,
+            API design, or greenfield builds. If you have something interesting, email is best.
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <ButtonLink variant="primary" href={`mailto:${EMAIL}`}>
-              Email
+              Email me
             </ButtonLink>
 
             <a

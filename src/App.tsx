@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { InitiativeVaultCaseStudy } from './pages/work/InitiativeVault';
 import { AthenahealthCaseStudy } from './pages/work/Athenahealth';
 import { FamiliarCaseStudy } from './pages/work/Familiar';
+import { PerspectCaseStudy } from './pages/work/Perspect';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/work/initiative-vault" element={<InitiativeVaultCaseStudy />} />
           <Route path="/work/athenahealth" element={<AthenahealthCaseStudy />} />
           <Route path="/work/familiar" element={<FamiliarCaseStudy />} />
+          <Route path="/work/perspect" element={<PerspectCaseStudy />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
