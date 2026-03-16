@@ -28,7 +28,52 @@ function CodeBlock({ children }: { children: string }) {
   );
 }
 
+function Screenshot({ src, alt, caption }: { src: string; alt: string; caption?: string }) {
+  return (
+    <figure className="mt-6">
+      <div className="overflow-hidden border border-border/70">
+        <img src={src} alt={alt} className="w-full" loading="lazy" />
+      </div>
+      {caption && (
+        <figcaption className="mt-2 font-code text-[11px] tracking-[0.12em] text-muted">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
+function EmbeddedDemo({ src }: { src: string }) {
+  return (
+    <div className="mt-8 overflow-hidden rounded-lg border border-border/70 bg-bg/20">
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-bg/35 px-4 py-3">
+        <div className="font-code text-xs tracking-[0.22em] text-muted">EMBEDDED DEMO</div>
+        <a
+          className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          href={src}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open in new tab ↗
+        </a>
+      </div>
+      <div className="aspect-[16/10] w-full">
+        <iframe
+          title="Perspect embedded demo"
+          src={src}
+          className="h-full w-full"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function PerspectCaseStudy() {
+  const live = 'https://perspect-iota.vercel.app/';
+
   return (
     <section className="pt-28 pb-20">
       <Container>
@@ -51,20 +96,13 @@ export function PerspectCaseStudy() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Link
-              to="/#work"
-              className="inline-flex items-center gap-2 border border-border/70 bg-bg/35 px-5 py-3 font-code text-sm font-semibold text-text transition-colors hover:border-accent/30"
-            >
-              Back
-              <span aria-hidden>←</span>
-            </Link>
             <a
-              href="https://perspect-iota.vercel.app/"
+              href={live}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-5 py-3 font-code text-sm font-semibold text-bg transition-colors hover:bg-accent/90"
             >
-              Live demo
+              Live app
               <span aria-hidden>↗</span>
             </a>
             <a
@@ -73,9 +111,16 @@ export function PerspectCaseStudy() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-border/70 bg-bg/35 px-5 py-3 font-code text-sm font-semibold text-text transition-colors hover:border-accent/30"
             >
-              GitHub
+              Source
               <span aria-hidden>↗</span>
             </a>
+            <Link
+              to="/#work"
+              className="inline-flex items-center gap-2 border border-border/70 bg-transparent px-5 py-3 font-code text-sm font-semibold text-muted transition-colors hover:border-accent/30 hover:text-text"
+            >
+              Back
+              <span aria-hidden>←</span>
+            </Link>
           </div>
 
           <div className="mt-10 flex flex-wrap gap-2">
@@ -88,6 +133,8 @@ export function PerspectCaseStudy() {
           </div>
         </div>
 
+        <EmbeddedDemo src={live} />
+
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
           <article className="max-w-3xl">
             <div className="space-y-12">
@@ -99,7 +146,7 @@ export function PerspectCaseStudy() {
                     Every TypeScript project with a database eventually writes the same boilerplate:
                     an interface matching the schema, a Zod validator for every input shape, a
                     tRPC router with CRUD procedures, and a form component wired up to a resolver.
-                    It's mechanical work — low-value, high-volume, and easy to let drift out of
+                    It’s mechanical work — low-value, high-volume, and easy to let drift out of
                     sync with the actual schema.
                   </p>
                   <p>
@@ -120,7 +167,7 @@ export function PerspectCaseStudy() {
                     raw code.
                   </p>
                   <p>
-                    Once you have the IR, code generation is scoped and predictable. The AI's
+                    Once you have the IR, code generation is scoped and predictable. The AI’s
                     job is generating idiomatic code from clean structured data, not interpreting
                     freeform text. TypeScript types and Zod schemas are generated entirely
                     deterministically — no LLM call at all.
@@ -151,7 +198,7 @@ export function PerspectCaseStudy() {
                   </p>
                   <p>
                     The Prisma parser walks the schema line-by-line: model blocks, enum blocks,
-                    relation annotations, optional markers, list types, <code className="font-code text-sm">@id</code>,
+                    relation annotations, optional markers, list types, <code className="font-code text-sm">@id</code>,{' '}
                     <code className="font-code text-sm">@unique</code>, and <code className="font-code text-sm">@default</code> attributes all
                     map to typed IR fields. SQL DDL goes through an equivalent parser that handles
                     CREATE TABLE, column definitions, primary keys, foreign keys, and
@@ -192,6 +239,12 @@ export interface UserWithRelations extends User {
   posts: Post[];
 }`}
                 </CodeBlock>
+
+                <Screenshot
+                  src="/images/percept_types.png"
+                  alt="Perspect Types output tab showing branded ID types and full interfaces"
+                  caption="TYPES TAB · branded IDs, interfaces, Create/Update inputs, WithRelations — no LLM"
+                />
               </section>
 
               <section>
@@ -213,6 +266,24 @@ export interface UserWithRelations extends User {
                     required strings.
                   </p>
                 </div>
+
+                <Screenshot
+                  src="/images/percept_zod.png"
+                  alt="Perspect Zod output tab showing create, update and full validation schemas"
+                  caption="ZOD TAB · create/update/full schemas, z.string().min(1) on required fields, z.coerce.date() for timestamps"
+                />
+
+                <Screenshot
+                  src="/images/percept_trpc.png"
+                  alt="Perspect tRPC output tab showing full CRUD router with cursor pagination"
+                  caption="TRPC TAB · CRUD procedures, protectedProcedure for mutations, TRPCError with typed codes, cursor pagination"
+                />
+
+                <Screenshot
+                  src="/images/percept_react_form.png"
+                  alt="Perspect React Forms output tab showing create and edit form components"
+                  caption="FORMS TAB · create + edit components, react-hook-form + Zod resolver, Tailwind, inline validation errors"
+                />
               </section>
 
               <section>
@@ -222,7 +293,7 @@ export interface UserWithRelations extends User {
                     Vercel AI SDK handles streaming and provider abstraction — swapping between
                     Anthropic and OpenAI is a one-line config change. Streaming matters here
                     because Zod schemas and tRPC routers for a reasonably complex model are
-                    several hundred lines; users shouldn't wait for a full response before
+                    several hundred lines; users shouldn’t wait for a full response before
                     seeing output.
                   </p>
                   <p>
@@ -247,7 +318,7 @@ export interface UserWithRelations extends User {
                   </p>
                   <p>
                     The layout is a resizable two-pane split using react-resizable-panels,
-                    so you can give more real estate to whichever side you're working with.
+                    so you can give more real estate to whichever side you’re working with.
                     Built-in example schemas let you try the tool without writing anything.
                   </p>
                 </div>
@@ -279,7 +350,7 @@ export interface UserWithRelations extends User {
                 <div className="font-code text-[10px] tracking-[0.22em] text-muted">LINKS</div>
                 <div className="mt-1 space-y-1">
                   <a
-                    href="https://perspect-iota.vercel.app/"
+                    href={live}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block font-code text-[12px] text-accent hover:underline"
