@@ -34,7 +34,6 @@ function EmbeddedDemo({ src }: { src: string }) {
           Open in new tab ↗
         </a>
       </div>
-
       <div className="aspect-[16/10] w-full">
         <iframe
           title="Familiar embedded demo"
@@ -62,10 +61,15 @@ export function FamiliarCaseStudy() {
             Familiar
           </h1>
 
+          <p className="mt-2 font-code text-xs tracking-[0.22em] text-muted">
+            AI-powered D&D 5e encounter generator
+          </p>
+
           <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
-            Familiar is an AI-powered D&D 5e encounter generator for dungeon masters. It takes optional
-            form input and produces a structured, ready-to-run encounter sheet: goal and stakes up top,
-            then setup, then type-specific content like rosters, puzzles, NPC profiles, and traps.
+            Familiar generates structured, ready-to-run encounter sheets for dungeon masters. It
+            takes optional form input and produces nine distinct encounter types — each with its own
+            schema, run-sheet layout, and type-specific guidance — driven by a RAG pipeline built
+            on the D&D 5e SRD.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -99,9 +103,10 @@ export function FamiliarCaseStudy() {
           <div className="mt-10 flex flex-wrap gap-2">
             <Tag>Next.js</Tag>
             <Tag>TypeScript</Tag>
-            <Tag>Gemini</Tag>
+            <Tag>Gemini 2.5 Flash</Tag>
+            <Tag>RAG · Tool calling</Tag>
             <Tag>Structured JSON</Tag>
-            <Tag>Tool calling</Tag>
+            <Tag>Context caching</Tag>
           </div>
         </div>
 
@@ -109,57 +114,132 @@ export function FamiliarCaseStudy() {
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
           <article className="max-w-3xl">
-            <div className="space-y-10">
+            <div className="space-y-12">
+
               <section>
-                <SectionTitle label="01" title="Constraints" />
+                <SectionTitle label="01" title="The retrieval problem" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The core constraint is output quality under uncertainty: everything in the form is
-                    optional, but the result still needs to be a complete encounter a DM can run.
+                    The D&D 5e SRD covers hundreds of monsters, hundreds of spells, and a large body
+                    of rules and encounter design guidance. Loading it all into every generation
+                    request is wasteful and context-inefficient. Loading none of it produces
+                    hallucinated stat blocks the moment the model reaches for a specific creature.
                   </p>
                   <p>
-                    The second constraint is reliability: the UI should render from structured data rather
-                    than parsing freeform text.
+                    The solution is a two-tier RAG architecture. A curated subset of the SRD —
+                    encounter design guidelines, rules for skill challenges, trap design principles,
+                    social encounter frameworks, and general guidance for each encounter type — loads
+                    into a Gemini API-level context cache at server startup and stays warm across
+                    requests. The large datasets (monster stat blocks and spells) stay out of the
+                    context window entirely, retrieved only when the model asks for them.
                   </p>
                 </div>
               </section>
 
               <section>
-                <SectionTitle label="02" title="Generation pipeline" />
+                <SectionTitle label="02" title="Tool-backed SRD datasets" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The request flow is designed as a predictable pipeline: the server assembles a
-                    deterministic prompt from the form input, calls the model with a cached SRD context,
-                    and uses tool calling to fetch creatures and spells on demand.
+                    The model has access to four tools, organized by dataset type. Two operate on
+                    the creature dataset (monsters and animals parsed from the SRD markdown), and two
+                    on the spell dataset. Within each dataset there’s a search tool — filtering by
+                    name, type, CR range, size, spell school, class, and concentration — and a
+                    detail tool that returns the full stat block or spell description by exact name.
                   </p>
                   <p>
-                    The model returns JSON matching a discriminated union. The response is validated and
-                    then rendered as a run sheet optimized for at-the-table scanning.
+                    The generation loop runs up to ten tool call rounds. On each round the model
+                    can issue multiple calls in parallel; the server executes them, appends the
+                    results to the conversation, and continues. The model typically searches first
+                    to find candidates, then fetches full stat blocks for the creatures it selects.
+                    The loop terminates when the model returns a text response with no pending tool
+                    calls.
+                  </p>
+                </div>
+                <div className="mt-6 space-y-2">
+                  {[
+                    'searchCreatures — filter by name, type, CR range, size; returns up to 20 summary records',
+                    'getCreature — full stat block by exact name, including abilities, actions, and lore',
+                    'searchSpells — filter by name, school, level range, class, concentration',
+                    'getSpell — full spell description by exact name',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-sm text-muted">
+                      <span className="mt-0.5 font-code text-accent">▸</span>
+                      <span className="font-code">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <SectionTitle label="03" title="Encounter schema design" />
+                <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
+                  <p>
+                    The output is a discriminated union of nine encounter kinds: combat, puzzle,
+                    social, skill challenge, investigation, trap, exploration, chase, and hazard.
+                    Every kind shares a common envelope — title, goal, stakes, setup, and per-class
+                    spotlight hooks — and extends it with a type-specific payload.
+                  </p>
+                  <p>
+                    The payloads encode design intent structurally. A combat encounter carries
+                    creature roles (brute, controller, lurker, etc.), terrain features typed as
+                    cover, obstacle, hazard, or interactable, an XP budget, and tactical notes
+                    per creature type. A social encounter carries NPC profiles with ideals, bonds,
+                    flaws, objection lists, and patience windows. A puzzle carries clue sets where
+                    each clue names the conclusion it supports and how it’s discovered. These
+                    aren’t free-form strings — the schema constrains what the model can return and
+                    guarantees the UI has typed fields to render.
+                  </p>
+                  <p>
+                    The encounter design guidelines in the cached context specify what good looks
+                    like for each type: combat encounters require at least two terrain features;
+                    puzzles require at least three clues per conclusion and two solution paths;
+                    investigation nodes must each carry clues that are independently sufficient;
+                    traps must include at least two countermeasures; social encounters must have
+                    branching consequences for success, partial success, and failure. The schema
+                    enforces the structure; the guidelines shape the content.
                   </p>
                 </div>
               </section>
 
               <section>
-                <SectionTitle label="03" title="SRD strategy" />
+                <SectionTitle label="04" title="Context caching" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The SRD is split into two tiers: a smaller inline context (rules and guidelines) that
-                    stays cached, and a larger tool-backed dataset for creatures and spells. This keeps the
-                    context window manageable while still letting the model pull specific stat blocks.
+                    The Gemini API supports explicit context caching: a named, server-side cache
+                    that stores a system prompt, a priming turn, and tool declarations against a
+                    specific model. Cached content is billed at a reduced token rate and doesn’t
+                    count toward per-request input tokens.
+                  </p>
+                  <p>
+                    Familiar creates the cache at first request and keeps the reference for 30
+                    minutes. Each generation call attaches the cache name rather than resending the
+                    full SRD context. If cache creation fails — cold start, quota limit, model
+                    mismatch — the server falls back to an uncached system prompt transparently.
+                    The degraded path is slower and more expensive per request but otherwise
+                    identical in behavior.
                   </p>
                 </div>
               </section>
 
               <section>
-                <SectionTitle label="04" title="Tradeoffs" />
+                <SectionTitle label="05" title="Tradeoffs" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The generation endpoint buffers a complete JSON response rather than streaming partial
-                    text. That choice simplifies the client and improves reliability, at the cost of a
-                    longer wait before the first pixels update.
+                    The generation endpoint buffers a complete JSON response rather than streaming
+                    partial text. Streaming structured data mid-object is fragile — partial JSON
+                    isn’t parseable, and a partially rendered run sheet is harder to read than a
+                    complete one that appears at once. The tradeoff is a longer wait before the
+                    first pixel updates, mitigated with a loading state.
+                  </p>
+                  <p>
+                    The tool call loop adds latency proportional to the number of rounds the model
+                    takes. A combat encounter that searches for creatures by CR, fetches two full
+                    stat blocks, then generates adds 2–3 round-trips over a simple text generation.
+                    That cost is intentional — grounded stat blocks are worth the wait.
                   </p>
                 </div>
               </section>
+
             </div>
           </article>
 
@@ -167,16 +247,28 @@ export function FamiliarCaseStudy() {
             <div className="font-code text-[11px] tracking-[0.22em] text-muted">AT A GLANCE</div>
             <div className="mt-4 space-y-3 text-sm leading-relaxed text-muted">
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
-                <div className="font-code text-[10px] tracking-[0.22em] text-muted">THEME</div>
-                <div className="mt-1 text-text">Thoughtful AI integration</div>
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">MODEL</div>
+                <div className="mt-1 text-text">Gemini 2.5 Flash</div>
+              </div>
+              <div className="border border-border/70 bg-bg/25 px-3 py-2">
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">RETRIEVAL</div>
+                <div className="mt-1 text-text">2-tier RAG · context cache + tool calls</div>
+              </div>
+              <div className="border border-border/70 bg-bg/25 px-3 py-2">
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">TOOLS</div>
+                <div className="mt-1 text-text">4 · creature search, creature detail, spell search, spell detail</div>
               </div>
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
                 <div className="font-code text-[10px] tracking-[0.22em] text-muted">OUTPUT</div>
-                <div className="mt-1 text-text">Structured encounter run sheet</div>
+                <div className="mt-1 text-text">9-kind discriminated union · typed run sheet</div>
               </div>
               <div className="border border-border/70 bg-bg/25 px-3 py-2">
-                <div className="font-code text-[10px] tracking-[0.22em] text-muted">NOTE</div>
-                <div className="mt-1 text-text">Embedded demo enabled</div>
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">ENCOUNTER TYPES</div>
+                <div className="mt-1 text-text">Combat · Puzzle · Social · Skill Challenge · Investigation · Trap · Exploration · Chase · Hazard</div>
+              </div>
+              <div className="border border-border/70 bg-bg/25 px-3 py-2">
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">STACK</div>
+                <div className="mt-1 text-text">Next.js · TypeScript · Vercel</div>
               </div>
             </div>
           </aside>
