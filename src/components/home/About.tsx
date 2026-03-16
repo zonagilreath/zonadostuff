@@ -22,6 +22,10 @@ export function About() {
               tooling that turned user actions into test automation code. That experience shapes how
               I think about systems: clean enough to hand off, reliable enough to trust.
             </p>
+            <p>
+              Outside of software, I make films and write — which mostly shows up as an obsession
+              with structure, pacing, and a sharp edit in the products I build.
+            </p>
           </div>
 
           <div className="mt-10 border-t border-border/70 pt-8">
