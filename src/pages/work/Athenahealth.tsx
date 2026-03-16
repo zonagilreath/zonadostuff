@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 
 const SCREENSHOTS = {
-  billSummary:    '/images/athena_bill_summary.jpg',
-  pppSummary:     '/images/athena_ppp_summary.jpg',
-  auth:           '/images/athena_auth.jpg',
-  options:        '/images/athena_options.jpg',
-  method:         '/images/athena_method.jpg',
-  review:         '/images/athena_review.jpg',
-  confirmation:   '/images/athena_confirmation.jpg',
+  billSummary:    '/images/athena_bill_summary.png',
+  pppSummary:     '/images/athena_ppp_summary.png',
+  auth:           '/images/athena_auth.png',
+  options:        '/images/athena_options.png',
+  method:         '/images/athena_method.png',
+  review:         '/images/athena_review.png',
+  confirmation:   '/images/athena_confirmation.png',
 } as const;
 
 function Tag({ children }: { children: string }) {
@@ -239,7 +239,7 @@ export function AthenahealthCaseStudy() {
                     The three-step payment funnel — amount, method, review — is shared across
                     bill pay and prepayment flows. State is held in a coordinated context that
                     lets each step read and write selections without prop drilling, and inline
-                    “Change” links on the review step jump back to the relevant step without
+                    "Change" links on the review step jump back to the relevant step without
                     losing progress.
                   </p>
                   <p>

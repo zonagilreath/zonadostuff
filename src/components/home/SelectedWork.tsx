@@ -28,6 +28,13 @@ const work: WorkItem[] = [
       'An experiment in AI-assisted D&D encounter generation. Explores where LLMs genuinely add value as a supplement — not a replacement — for the human side of running a table. Uses RAG, MCP, and Gemini context caching.',
     highlights: ['RAG + MCP architecture', 'Gemini context caching', 'Local tool-calling over SRD data'],
     href: '/work/familiar'
+  },
+  {
+    title: 'Perspect',
+    blurb:
+      'A schema-to-code tool that takes Prisma, SQL DDL, or plain English and generates TypeScript types, Zod validators, tRPC routers, and React forms. Type generation is fully deterministic; LLM handles tRPC and form scaffolding via structured IR.',
+    highlights: ['Prisma · SQL · Plain English input', 'Vercel AI SDK · streaming', 'Monaco Editor · Next.js 14'],
+    href: '/work/perspect'
   }
 ];
 
@@ -40,7 +47,7 @@ export function SelectedWork() {
             <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
               Selected work
             </h2>
-            <div className="font-code text-xs tracking-[0.22em] text-muted">3 CASE STUDIES</div>
+            <div className="font-code text-xs tracking-[0.22em] text-muted">4 CASE STUDIES</div>
           </div>
 
           <div className="mt-8 border-t border-border/70">
