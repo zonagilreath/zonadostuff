@@ -3,12 +3,16 @@ import { Container } from '../../components/ui/Container';
 
 const SCREENSHOTS = {
   billingOverview:  '/images/athena_billing_overview.png',
+  billSummary:      '/images/athena_bill_summary.png',
   billSelection:    '/images/athena_bill_selection.png',
   paymentMethods:   '/images/athena_payment_methods.png',
-  methodSelection:  '/images/athena_method_selection.png',
+  methodSelection:  '/images/athena_method.png',
+  options:          '/images/athena_options.png',
   paymentPlan:      '/images/athena_payment_plan.png',
+  pppSummary:       '/images/athena_ppp_summary.png',
   review:           '/images/athena_review.png',
   confirmation:     '/images/athena_confirmation.png',
+  auth:             '/images/athena_auth.png',
 } as const;
 
 function Tag({ children }: { children: string }) {
@@ -30,13 +34,17 @@ function SectionTitle({ label, title }: { label: string; title: string }) {
   );
 }
 
-function Screenshot({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+function Screenshot({ src, alt, caption, mobile }: { src: string; alt: string; caption: string; mobile?: boolean }) {
   return (
     <figure className="my-10 space-y-3">
       <img
         src={src}
         alt={alt}
-        className="w-full border border-border/70 object-cover"
+        className={
+          mobile
+            ? "max-w-[394px] w-full border border-border/70"
+            : "w-full border border-border/70"
+        }
         loading="lazy"
       />
       <figcaption className="font-code text-[11px] tracking-[0.18em] text-muted">
@@ -211,21 +219,22 @@ export function AthenahealthCaseStudy() {
                 </div>
 
                 <Screenshot
-                  src={SCREENSHOTS.billSelection}
-                  alt="Make a Payment step 1 showing two bills due now with provider visit details and editable payment amounts"
-                  caption="Step 1 — per-bill amount inputs with due-now badges, capped to remaining balance"
+                  src={SCREENSHOTS.options}
+                  alt="Make a Payment step 1 showing prepayment bills with past due, behind schedule, and due now statuses and editable payment amounts"
+                  caption="Step 1 — per-bill amount inputs with status badges, capped to remaining balance"
                 />
 
                 <Screenshot
                   src={SCREENSHOTS.methodSelection}
-                  alt="Make a Payment step 2 showing saved Visa cards with default card pre-selected and inline card management"
-                  caption="Step 2 — saved card selection with default pre-selected, inline delete and make-default controls"
+                  alt="Make a Payment step 2 showing saved cards across networks with default selection, expired card handling, and inline card management"
+                  caption="Step 2 — saved card selection with default pre-selected, expiration badges, and inline delete controls"
                 />
 
                 <Screenshot
                   src={SCREENSHOTS.review}
                   alt="Make a Payment step 3 showing total payment amount, selected Visa card, billing address, and Change links"
                   caption="Step 3 — full payment summary with inline Change links, card details, and billing address confirmation"
+                  mobile
                 />
               </section>
 
@@ -249,9 +258,16 @@ export function AthenahealthCaseStudy() {
                 </div>
 
                 <Screenshot
+                  src={SCREENSHOTS.pppSummary}
+                  alt="Prepayment plan summary showing due soon status, amount due, plan progress bar, total collected, and remaining balance with make a payment CTA"
+                  caption="Prepayment plan summary — progress tracking, due status badges, and payment CTA"
+                />
+
+                <Screenshot
                   src={SCREENSHOTS.paymentPlan}
                   alt="Payment plan setup showing three installment options — 4 months at $626.88, 8 months at $313.44, and 12 months at $208.90 — for a $6,507.50 balance"
                   caption="Plan setup — tiered installment options with calculated monthly amounts and final payment dates"
+                  mobile
                 />
               </section>
 
@@ -271,6 +287,7 @@ export function AthenahealthCaseStudy() {
                   src={SCREENSHOTS.confirmation}
                   alt="Payment confirmation showing thank-you message, email confirmation sent, share receipt action, and payment summary with visit details and amount paid"
                   caption="Confirmation — structured receipt with visit details, payment date, and share/print actions"
+                  mobile
                 />
               </section>
 
