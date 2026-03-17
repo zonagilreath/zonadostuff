@@ -37,7 +37,7 @@ export function Services() {
   return (
     <section id="services" className="scroll-mt-24 py-20">
       <Container>
-        <p className="font-code text-[11px] tracking-[0.22em] text-accent uppercase">Services</p>
+        <p className="font-heading text-[11px] font-semibold tracking-[0.14em] text-accent uppercase">Services</p>
         <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
           What I can build for you
         </h2>

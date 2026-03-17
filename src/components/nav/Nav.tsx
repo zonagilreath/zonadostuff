@@ -60,7 +60,7 @@ export function Nav() {
               key={item.id}
               onClick={() => scrollToId(item.id)}
               className={[
-                'relative font-code text-xs tracking-[0.22em] transition-colors',
+                'relative font-heading text-xs tracking-[0.12em] uppercase transition-colors',
                 active === item.id ? 'text-text' : 'text-muted hover:text-text'
               ].join(' ')}
             >
@@ -70,14 +70,14 @@ export function Nav() {
 
           <a
             href="mailto:bryson.gilreath@gmail.com"
-            className="ml-2 inline-flex items-center gap-2 border border-accent/30 bg-accent px-3.5 py-1.5 font-code text-[11px] font-semibold tracking-[0.22em] text-bg transition-colors hover:bg-accent/90"
+            className="ml-2 inline-flex items-center gap-2 border border-accent/30 bg-accent px-3.5 py-1.5 font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-bg transition-colors hover:bg-accent/90"
           >
             HIRE ME
           </a>
         </nav>
 
         <button
-          className="inline-flex items-center gap-2 font-code text-xs tracking-[0.22em] text-muted hover:text-text md:hidden"
+          className="inline-flex items-center gap-2 font-heading text-xs uppercase tracking-[0.12em] text-muted hover:text-text md:hidden"
           aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setMobileOpen((v) => !v)}
         >
@@ -97,7 +97,7 @@ export function Nav() {
                   setMobileOpen(false);
                 }}
                 className={[
-                  'py-3 text-left font-code text-xs tracking-[0.22em] transition-colors',
+                  'py-3 text-left font-heading text-xs uppercase tracking-[0.12em] transition-colors',
                   active === item.id ? 'text-text' : 'text-muted'
                 ].join(' ')}
               >
@@ -108,7 +108,7 @@ export function Nav() {
             <div className="mt-2 border-t border-border/70 pt-4">
               <a
                 href="mailto:bryson.gilreath@gmail.com"
-                className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-4 py-2 font-code text-[11px] font-semibold tracking-[0.22em] text-bg"
+                className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-4 py-2 font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-bg"
               >
                 HIRE ME
               </a>

@@ -1,7 +1,7 @@
 import { Container } from '../ui/Container';
 
 const stats = [
-  { value: '8+', label: 'Years in software' },
+  { value: '7+', label: 'Years in software' },
   { value: '30M', label: 'Users at scale' },
   { value: '$2.5B', label: 'Annual payment volume' },
   { value: '3', label: 'Production apps shipped' }
@@ -30,7 +30,7 @@ export function About() {
   return (
     <section id="about" className="scroll-mt-24 py-20">
       <Container>
-        <p className="font-code text-[11px] tracking-[0.22em] text-accent uppercase">About</p>
+        <p className="font-heading text-[11px] font-semibold tracking-[0.14em] text-accent uppercase">About</p>
         <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
           How I work
         </h2>
@@ -40,7 +40,7 @@ export function About() {
           {stats.map((s) => (
             <div key={s.label} className="bg-bg px-5 py-5 text-center sm:px-6">
               <div className="font-heading text-2xl font-bold text-text sm:text-3xl">{s.value}</div>
-              <div className="mt-1 font-code text-[10px] tracking-[0.22em] text-muted uppercase">{s.label}</div>
+              <div className="mt-1 font-heading text-[10px] tracking-[0.1em] text-muted uppercase">{s.label}</div>
             </div>
           ))}
         </div>

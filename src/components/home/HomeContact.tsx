@@ -8,7 +8,7 @@ export function HomeContact() {
     <section id="contact" className="scroll-mt-24 py-20">
       <Container>
         <div className="border border-border/60 bg-surface/40 p-8 sm:p-12 lg:p-16">
-          <p className="font-code text-[11px] tracking-[0.22em] text-accent uppercase">Get in touch</p>
+          <p className="font-heading text-[11px] font-semibold tracking-[0.14em] text-accent uppercase">Get in touch</p>
 
           <h2 className="mt-4 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">
             Have a project in mind?
@@ -25,7 +25,7 @@ export function HomeContact() {
             </ButtonLink>
 
             <a
-              className="font-code text-xs tracking-[0.22em] text-muted hover:text-text transition-colors"
+              className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
               href="https://linkedin.com/in/zonagilreath"
               target="_blank"
               rel="noreferrer"
@@ -34,7 +34,7 @@ export function HomeContact() {
             </a>
 
             <a
-              className="font-code text-xs tracking-[0.22em] text-muted hover:text-text transition-colors"
+              className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
               href="https://github.com/ZonaGilreath"
               target="_blank"
               rel="noreferrer"

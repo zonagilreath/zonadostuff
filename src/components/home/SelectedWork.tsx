@@ -54,12 +54,12 @@ export function SelectedWork() {
       <Container>
         <div className="flex items-end justify-between gap-6">
           <div>
-            <p className="font-code text-[11px] tracking-[0.22em] text-accent uppercase">Portfolio</p>
+            <p className="font-heading text-[11px] font-semibold tracking-[0.14em] text-accent uppercase">Portfolio</p>
             <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
               Selected work
             </h2>
           </div>
-          <p className="hidden font-code text-xs tracking-[0.22em] text-muted sm:block">
+          <p className="hidden font-heading text-xs tracking-[0.1em] text-muted uppercase sm:block">
             {work.length} CASE STUDIES
           </p>
         </div>
@@ -73,11 +73,11 @@ export function SelectedWork() {
             >
               {/* Category + Impact row */}
               <div className="flex items-center justify-between gap-4">
-                <span className="font-code text-[10px] tracking-[0.22em] text-muted uppercase">
+                <span className="font-heading text-[10px] font-medium tracking-[0.1em] text-muted uppercase">
                   {w.category}
                 </span>
                 {w.impact && (
-                  <span className="font-code text-[10px] tracking-[0.22em] text-accent">
+                  <span className="font-heading text-[10px] font-semibold tracking-[0.1em] text-accent uppercase">
                     {w.impact}
                   </span>
                 )}
@@ -106,7 +106,7 @@ export function SelectedWork() {
               </div>
 
               {/* Hover arrow */}
-              <div className="absolute bottom-6 right-6 font-code text-xs tracking-[0.22em] text-accent opacity-0 transition-opacity group-hover:opacity-100 sm:bottom-8 sm:right-8">
+              <div className="absolute bottom-6 right-6 font-heading text-xs font-semibold tracking-[0.1em] text-accent opacity-0 transition-opacity group-hover:opacity-100 sm:bottom-8 sm:right-8">
                 VIEW →
               </div>
             </a>

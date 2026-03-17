@@ -29,7 +29,7 @@ export function HomeHero() {
           </p>
 
           {/* Social proof strip */}
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-code text-xs tracking-[0.18em] text-muted/80">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-heading text-xs uppercase tracking-[0.12em] text-muted/80">
             <span>athenahealth</span>
             <span className="text-border">·</span>
             <span>Apple</span>
@@ -54,7 +54,7 @@ export function HomeHero() {
 
             <div className="flex items-center gap-4 sm:ml-2">
               <a
-                className="font-code text-xs tracking-[0.22em] text-muted hover:text-text transition-colors"
+                className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
                 href="https://linkedin.com/in/zonagilreath"
                 target="_blank"
                 rel="noreferrer"
@@ -62,7 +62,7 @@ export function HomeHero() {
                 LinkedIn ↗
               </a>
               <a
-                className="font-code text-xs tracking-[0.22em] text-muted hover:text-text transition-colors"
+                className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
                 href="https://github.com/ZonaGilreath"
                 target="_blank"
                 rel="noreferrer"
