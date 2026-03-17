@@ -2,13 +2,10 @@ import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 
 const SCREENSHOTS = {
-  billingOverview:  '/images/athena_billing_overview.png',
-  billSummary:      '/images/athena_bill_summary.png',
-  billSelection:    '/images/athena_bill_selection.png',
-  paymentMethods:   '/images/athena_payment_methods.png',
+  billingOverview:  '/images/athena_bill_summary.png',
+  paymentMethods:   '/images/athena_method.png',
   methodSelection:  '/images/athena_method.png',
   options:          '/images/athena_options.png',
-  paymentPlan:      '/images/athena_payment_plan.png',
   pppSummary:       '/images/athena_ppp_summary.png',
   review:           '/images/athena_review.png',
   confirmation:     '/images/athena_confirmation.png',
@@ -165,8 +162,8 @@ export function AthenahealthCaseStudy() {
 
                 <Screenshot
                   src={SCREENSHOTS.billingOverview}
-                  alt="Billing & Payments page showing amount due for 2 open bills with stacked bill summary bar breaking down cost, insurance adjustments, insurance paid, prior payments, and amount due"
-                  caption="Billing overview — stacked proportional bar and line-item breakdown with per-bill detail expand"
+                  alt="Bill summary showing visit details, provider, date of service, amount billed, insurance adjustments, and patient responsibility breakdown"
+                  caption="Billing overview — itemized bill summary with insurance adjustments and patient responsibility"
                 />
               </section>
 
@@ -192,8 +189,8 @@ export function AthenahealthCaseStudy() {
 
                 <Screenshot
                   src={SCREENSHOTS.paymentMethods}
-                  alt="Payment Methods section showing two saved Visa cards with default badge and actions menu, and Insurance section showing Aetna coverage on file with member ID"
-                  caption="Card management — saved cards with default designation, and insurance on file with status badges"
+                  alt="Payment method selection showing saved cards across networks — Amex, Visa (expired), Mastercard (default), Discover — with inline delete and default management"
+                  caption="Card management — saved cards with expiration tracking, default designation, and inline controls"
                 />
               </section>
 
@@ -263,12 +260,6 @@ export function AthenahealthCaseStudy() {
                   caption="Prepayment plan summary — progress tracking, due status badges, and payment CTA"
                 />
 
-                <Screenshot
-                  src={SCREENSHOTS.paymentPlan}
-                  alt="Payment plan setup showing three installment options — 4 months at $626.88, 8 months at $313.44, and 12 months at $208.90 — for a $6,507.50 balance"
-                  caption="Plan setup — tiered installment options with calculated monthly amounts and final payment dates"
-                  mobile
-                />
               </section>
 
               <section>
