@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 
 const SCREENSHOTS = {
-  billingOverview:  '/images/athena_bill_summary.png',
-  paymentMethods:   '/images/athena_method.png',
-  methodSelection:  '/images/athena_method.png',
-  options:          '/images/athena_options.png',
+  billingOverview:  '/images/athena_billing_overview.png',
+  paymentMethods:   '/images/athena_payment_methods.png',
+  billSelection:    '/images/athena_bill_selection.png',
+  methodSelection:  '/images/athena_method_selection.png',
+  paymentPlan:      '/images/athena_payment_plan.png',
   pppSummary:       '/images/athena_ppp_summary.png',
   review:           '/images/athena_review.png',
   confirmation:     '/images/athena_confirmation.png',
-  auth:             '/images/athena_auth.png',
 } as const;
 
 function Tag({ children }: { children: string }) {
@@ -162,8 +162,8 @@ export function AthenahealthCaseStudy() {
 
                 <Screenshot
                   src={SCREENSHOTS.billingOverview}
-                  alt="Bill summary showing visit details, provider, date of service, amount billed, insurance adjustments, and patient responsibility breakdown"
-                  caption="Billing overview — itemized bill summary with insurance adjustments and patient responsibility"
+                  alt="Billing & Payments page showing amount due for 2 open bills, Make a Payment and Set Up Payment Plan CTAs, stacked bill summary bar, and insurance card upload prompt"
+                  caption="Billing overview — amount due summary, actionable CTAs, and stacked proportional bill breakdown"
                 />
               </section>
 
@@ -189,8 +189,8 @@ export function AthenahealthCaseStudy() {
 
                 <Screenshot
                   src={SCREENSHOTS.paymentMethods}
-                  alt="Payment method selection showing saved cards across networks — Amex, Visa (expired), Mastercard (default), Discover — with inline delete and default management"
-                  caption="Card management — saved cards with expiration tracking, default designation, and inline controls"
+                  alt="Payment Methods section showing two saved Visa cards with default badge and actions menu, Insurance section showing Aetna on file and removal pending, and Billing History tab"
+                  caption="Card management — saved cards with default designation, insurance on file with status badges, and billing history"
                 />
               </section>
 
@@ -216,21 +216,23 @@ export function AthenahealthCaseStudy() {
                 </div>
 
                 <Screenshot
-                  src={SCREENSHOTS.options}
-                  alt="Make a Payment step 1 showing prepayment bills with past due, behind schedule, and due now statuses and editable payment amounts"
-                  caption="Step 1 — per-bill amount inputs with status badges, capped to remaining balance"
+                  src={SCREENSHOTS.billSelection}
+                  alt="Make a Payment step 1 showing two bills due now with provider visit details and editable payment amount inputs"
+                  caption="Step 1 — per-bill amount inputs with due-now badges, capped to remaining balance"
+                  mobile
                 />
 
                 <Screenshot
                   src={SCREENSHOTS.methodSelection}
-                  alt="Make a Payment step 2 showing saved cards across networks with default selection, expired card handling, and inline card management"
-                  caption="Step 2 — saved card selection with default pre-selected, expiration badges, and inline delete controls"
+                  alt="Make a Payment step 2 showing two saved Visa cards, default card pre-selected with inline delete and make-default controls"
+                  caption="Step 2 — saved card selection with default pre-selected and inline card management"
+                  mobile
                 />
 
                 <Screenshot
                   src={SCREENSHOTS.review}
-                  alt="Make a Payment step 3 showing total payment amount, selected Visa card, billing address, and Change links"
-                  caption="Step 3 — full payment summary with inline Change links, card details, and billing address confirmation"
+                  alt="Make a Payment step 3 showing total payment, selected Visa card, billing address, and inline Change links"
+                  caption="Step 3 — full payment summary with inline Change links, card details, and billing address"
                   mobile
                 />
               </section>
@@ -260,6 +262,12 @@ export function AthenahealthCaseStudy() {
                   caption="Prepayment plan summary — progress tracking, due status badges, and payment CTA"
                 />
 
+                <Screenshot
+                  src={SCREENSHOTS.paymentPlan}
+                  alt="Payment plan setup showing three installment options — $626.88/mo for 4 months, $313.44/mo for 8 months, $208.90/mo for 12 months — for a $6,507.50 balance"
+                  caption="Plan setup — tiered installment options with calculated monthly amounts and final payment dates"
+                  mobile
+                />
               </section>
 
               <section>
