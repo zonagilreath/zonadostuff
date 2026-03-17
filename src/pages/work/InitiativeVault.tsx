@@ -59,7 +59,7 @@ export function InitiativeVaultCaseStudy() {
           <div className="font-code text-xs tracking-[0.22em] text-muted">CASE STUDY · PRIVATE BETA</div>
 
           <h1 className="mt-4 font-heading text-4xl font-bold tracking-tight text-text sm:text-5xl">
-            Initiative Vault
+            Gelatinous Vault
           </h1>
 
           <p className="mt-2 font-code text-xs tracking-[0.22em] text-muted">
@@ -67,7 +67,7 @@ export function InitiativeVaultCaseStudy() {
           </p>
 
           <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
-            Initiative Vault is a professional-grade encounter manager for tabletop RPGs, built around
+            Gelatinous Vault is a professional-grade encounter manager for tabletop RPGs, built around
             one idea: speed at the table. It keeps initiative order, monster stats, spells, class
             features, and dice in a single screen designed for real play. I built the full stack as
             founding engineer — event-sourced state, a schema-driven SRD content system, type-safe
@@ -76,7 +76,7 @@ export function InitiativeVaultCaseStudy() {
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href="https://initiative-vault.vercel.app"
+              href="https://gelatinousvault.com"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-5 py-3 font-code text-sm font-semibold text-bg transition-colors hover:bg-accent/90"
@@ -116,7 +116,7 @@ export function InitiativeVaultCaseStudy() {
 
         <Screenshot
           src={SCREENSHOTS.overview}
-          alt="Initiative Vault overview: three-panel layout showing encounter list, monster detail card, and dice roller"
+          alt="Gelatinous Vault overview: three-panel layout showing encounter list, monster detail card, and dice roller"
           caption="Overview — encounter order, monster stat block, compendium search, and dice roller in one screen"
         />
 
@@ -134,7 +134,7 @@ export function InitiativeVaultCaseStudy() {
                     not play.
                   </p>
                   <p>
-                    Initiative Vault prioritizes the opposite: the high-frequency actions — advancing
+                    Gelatinous Vault prioritizes the opposite: the high-frequency actions — advancing
                     turns, updating HP, tracking conditions — are front and center. Everything else is
                     a keystroke or click away but never in the way.
                   </p>

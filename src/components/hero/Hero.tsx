@@ -31,7 +31,7 @@ export function Hero() {
               Hire Me
             </ButtonLink>
             <ButtonLink variant="secondary" href="/work/initiative-vault">
-              Initiative Vault
+              Gelatinous Vault
             </ButtonLink>
             <ButtonLink
               variant="ghost"

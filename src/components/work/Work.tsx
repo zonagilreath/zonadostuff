@@ -13,7 +13,7 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: 'Initiative Vault',
+    title: 'Gelatinous Vault',
     role: 'Founding Engineer · Gelatinous Labs',
     period: '2024 — Present',
     description:
