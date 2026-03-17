@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 
 const SCREENSHOTS = {
-  billSummary:    '/images/athena_bill_summary.png',
-  pppSummary:     '/images/athena_ppp_summary.png',
-  auth:           '/images/athena_auth.png',
-  options:        '/images/athena_options.png',
-  method:         '/images/athena_method.png',
-  review:         '/images/athena_review.png',
-  confirmation:   '/images/athena_confirmation.png',
+  billingOverview:  '/images/athena_billing_overview.png',
+  paymentMethods:   '/images/athena_payment_methods.png',
+  billSelection:    '/images/athena_bill_selection.png',
+  methodSelection:  '/images/athena_method_selection.png',
+  paymentPlan:      '/images/athena_payment_plan.png',
+  pppSummary:       '/images/athena_ppp_summary.png',
+  review:           '/images/athena_review.png',
+  confirmation:     '/images/athena_confirmation.png',
 } as const;
 
 function Tag({ children }: { children: string }) {
@@ -30,13 +31,17 @@ function SectionTitle({ label, title }: { label: string; title: string }) {
   );
 }
 
-function Screenshot({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+function Screenshot({ src, alt, caption, mobile }: { src: string; alt: string; caption: string; mobile?: boolean }) {
   return (
     <figure className="my-10 space-y-3">
       <img
         src={src}
         alt={alt}
-        className="w-full border border-border/70 object-cover"
+        className={
+          mobile
+            ? "max-w-[394px] w-full border border-border/70"
+            : "w-full border border-border/70"
+        }
         loading="lazy"
       />
       <figcaption className="font-code text-[11px] tracking-[0.18em] text-muted">
@@ -137,140 +142,162 @@ export function AthenahealthCaseStudy() {
               </section>
 
               <section>
-                <SectionTitle label="02" title="Bill pay" />
+                <SectionTitle label="02" title="Billing overview" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    The bill pay flow covers the full patient journey: identity verification,
-                    an itemized bill summary with a stacked breakdown of insurance adjustments,
-                    insurance payments, prior payments, and amount due, through a three-step
-                    payment funnel ending in a printable confirmation.
+                    The Billing &amp; Payments hub is the patient's financial home — surfacing
+                    outstanding balances, insurance status, and actionable CTAs in a single view.
+                    A stacked bill summary bar visualizes the proportional breakdown of cost after
+                    practice discount, insurance adjustments, insurance payments, and prior patient
+                    payments against the amount due. The bar and line items derive from the same
+                    data source, keeping them permanently in sync.
                   </p>
                   <p>
-                    The bill summary view derives a visual proportional breakdown from the same
-                    data that feeds the line items — so the bar and the table are always in sync.
-                    The payment step lets patients select partial amounts per bill, choose or add
-                    a card (with expired card detection and default card management inline), review,
-                    and confirm. Saved card state and selection persist across the funnel without
-                    page reloads.
+                    Contextual banners prompt patients to upload insurance card images or act on
+                    pending balances. The "Make a Payment" and "Set Up Payment Plan" CTAs route
+                    into the respective funnels, while per-bill detail expands inline for patients
+                    who want to inspect individual charges before paying.
                   </p>
                 </div>
 
                 <Screenshot
-                  src={SCREENSHOTS.billSummary}
-                  alt="Bill summary page showing stacked bar breakdown of insurance adjustments, insurance paid, prior payments, and amount due"
-                  caption="Bill summary — proportional bar and line-item breakdown derived from the same data, with per-bill detail expand"
-                />
-
-                <Screenshot
-                  src={SCREENSHOTS.method}
-                  alt="Payment method selection showing saved cards including expired card with delete action and default card badge"
-                  caption="Payment method step — saved card list with expired detection, default badge, and inline card management"
+                  src={SCREENSHOTS.billingOverview}
+                  alt="Billing & Payments page showing amount due for 2 open bills, Make a Payment and Set Up Payment Plan CTAs, stacked bill summary bar, and insurance card upload prompt"
+                  caption="Billing overview — amount due summary, actionable CTAs, and stacked proportional bill breakdown"
                 />
               </section>
 
               <section>
-                <SectionTitle label="03" title="Prepayment plans" />
+                <SectionTitle label="03" title="Card management and insurance" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    Prepayment Plans (PiPP) let patients pay for upcoming procedures in
-                    installments before the date of service — reducing collections burden
-                    post-visit and improving upfront revenue capture. The feature drove a 15%
-                    increase in Patient Pay Yield with 96% patient satisfaction and 60,000
-                    plans created monthly at steady state.
+                    The payment methods section lets patients manage saved cards with default
+                    designation, expiration tracking, and inline actions — add, delete, or
+                    promote a card to default without leaving the page. Each card displays its
+                    network logo, masked number, expiration, and cardholder name alongside a
+                    contextual actions menu.
                   </p>
                   <p>
-                    The prepayment summary view shows plan progress with a live progress bar,
-                    amount collected vs. remaining, and due-date status badges (Due Soon,
-                    Past Due, Behind Schedule) that update based on plan state. The payment
-                    selection step surfaces multiple concurrent plans as individually
-                    checkable cards with editable amounts, each capped to their remaining
-                    balance, feeding a single payment total.
+                    Insurance on file surfaces active coverage with member ID and status badges
+                    (On File, Removal Pending) so patients can verify their billing identity
+                    at a glance. Card on File (CoF) grew payment volume 38% from $168M in 2022
+                    to $233M in 2024 through Pay Now and digital consent flows. AutoPay plans
+                    grew 35% in 2023 with over 60% digitally consented, reducing paper-based
+                    authorization overhead.
+                  </p>
+                </div>
+
+                <Screenshot
+                  src={SCREENSHOTS.paymentMethods}
+                  alt="Payment Methods section showing two saved Visa cards with default badge and actions menu, Insurance section showing Aetna on file and removal pending, and Billing History tab"
+                  caption="Card management — saved cards with default designation, insurance on file with status badges, and billing history"
+                />
+              </section>
+
+              <section>
+                <SectionTitle label="04" title="Bill pay funnel" />
+                <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
+                  <p>
+                    The three-step payment funnel — amount, method, review — is shared across
+                    bill pay and payment plan flows. Step 1 surfaces each open bill as a
+                    selectable card with the provider visit, date of service, and an editable
+                    amount input capped to the bill balance. Patients can pay one bill or
+                    combine multiple into a single transaction.
                   </p>
                   <p>
+                    Step 2 presents saved payment methods with the default card pre-selected.
+                    Each card shows its masked number, expiration, cardholder name, and network
+                    logo with inline delete and default management. Step 3 is a final review
+                    showing the total, selected card, and billing address with inline "Change"
+                    links that jump back to the relevant step without losing progress. State is
+                    held in a coordinated context so each step reads and writes selections
+                    without prop drilling.
+                  </p>
+                </div>
+
+                <Screenshot
+                  src={SCREENSHOTS.billSelection}
+                  alt="Make a Payment step 1 showing two bills due now with provider visit details and editable payment amount inputs"
+                  caption="Step 1 — per-bill amount inputs with due-now badges, capped to remaining balance"
+                  mobile
+                />
+
+                <Screenshot
+                  src={SCREENSHOTS.methodSelection}
+                  alt="Make a Payment step 2 showing two saved Visa cards, default card pre-selected with inline delete and make-default controls"
+                  caption="Step 2 — saved card selection with default pre-selected and inline card management"
+                  mobile
+                />
+
+                <Screenshot
+                  src={SCREENSHOTS.review}
+                  alt="Make a Payment step 3 showing total payment, selected Visa card, billing address, and inline Change links"
+                  caption="Step 3 — full payment summary with inline Change links, card details, and billing address"
+                  mobile
+                />
+              </section>
+
+              <section>
+                <SectionTitle label="05" title="Payment plans" />
+                <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
+                  <p>
+                    Payment plans let patients split their balance into predictable monthly
+                    installments — reducing collections burden and improving upfront revenue
+                    capture. The setup flow presents tiered options (4, 8, or 12 months)
+                    with calculated monthly amounts and final payment dates, followed by
+                    billing details and payment method selection.
+                  </p>
+                  <p>
+                    Prepayment Plans (PiPP) drove a 15% increase in Patient Pay Yield with
+                    96% patient satisfaction and 60,000 plans created monthly at steady state.
                     Conversion rate during beta was 77%, with $20M collected before general
-                    availability. The beta instrumentation — tracking plan creation, step
-                    completion, and drop-off points — was built alongside the feature itself,
-                    not retrofitted.
+                    availability. The instrumentation — tracking plan creation, step completion,
+                    and drop-off points — was built alongside the feature itself, not retrofitted.
                   </p>
                 </div>
 
                 <Screenshot
                   src={SCREENSHOTS.pppSummary}
-                  alt="Prepayment plan summary showing plan name, due date, progress bar, amount collected, and remaining balance"
-                  caption="Prepayment plan summary — live progress bar and collection status with plan detail expand"
+                  alt="Prepayment plan summary showing due soon status, amount due, plan progress bar, total collected, and remaining balance with make a payment CTA"
+                  caption="Prepayment plan summary — progress tracking, due status badges, and payment CTA"
                 />
 
                 <Screenshot
-                  src={SCREENSHOTS.options}
-                  alt="Payment amount selection showing multiple prepayment plan cards with status badges and editable amount inputs"
-                  caption="Amount selection step — per-plan amount inputs with status badges, capped to remaining balance"
+                  src={SCREENSHOTS.paymentPlan}
+                  alt="Payment plan setup showing three installment options — $626.88/mo for 4 months, $313.44/mo for 8 months, $208.90/mo for 12 months — for a $6,507.50 balance"
+                  caption="Plan setup — tiered installment options with calculated monthly amounts and final payment dates"
+                  mobile
                 />
               </section>
 
               <section>
-                <SectionTitle label="04" title="Guest pay and card on file" />
+                <SectionTitle label="06" title="Confirmation and receipts" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
-                    Guest Pay allows patients to pay without an account, authenticated by last
-                    name and date of birth against the practice record. The identity step is
-                    intentionally minimal — two fields, no account creation friction — but
-                    feeds into the same payment funnel as authenticated users.
-                  </p>
-                  <p>
-                    Card on File (CoF) grew payment volume 38% from $168M in 2022 to $233M in
-                    2024 through the Pay Now feature and digital consent flows. AutoPay payment
-                    plans grew 35% in 2023 with over 60% digitally consented, reducing
-                    paper-based authorization overhead and improving recurring payment
-                    reliability.
+                    The confirmation step produces a structured payment summary: visit details,
+                    amount paid, payment date, and email confirmation — the full set of fields
+                    a patient needs to reconcile with their bank or dispute a charge. A share
+                    receipt action and print button provide offline record-keeping for patients
+                    who need documentation for insurance or reimbursement.
                   </p>
                 </div>
-
-                <Screenshot
-                  src={SCREENSHOTS.auth}
-                  alt="Guest pay identity verification screen asking for patient last name and date of birth"
-                  caption="Guest pay auth — last name and date of birth verification, no account required"
-                />
-              </section>
-
-              <section>
-                <SectionTitle label="05" title="Payment funnel" />
-                <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
-                  <p>
-                    The three-step payment funnel — amount, method, review — is shared across
-                    bill pay and prepayment flows. State is held in a coordinated context that
-                    lets each step read and write selections without prop drilling, and inline
-                    "Change" links on the review step jump back to the relevant step without
-                    losing progress.
-                  </p>
-                  <p>
-                    The confirmation step produces a structured payment summary: items paid,
-                    card used, billing address, trace number, transaction number, and approval
-                    code — the full set of fields a patient might need to reconcile with their
-                    bank or dispute a charge. It is printable from the page header.
-                  </p>
-                </div>
-
-                <Screenshot
-                  src={SCREENSHOTS.review}
-                  alt="Payment review step showing payment amount, Change link, selected Mastercard, billing address, and Confirm Payment button"
-                  caption="Review step — full payment summary with inline Change links and billing address confirmation"
-                />
 
                 <Screenshot
                   src={SCREENSHOTS.confirmation}
-                  alt="Payment confirmation showing items paid, payment method, date, practice address, trace number, and approval code"
-                  caption="Confirmation — structured receipt with trace number, transaction identifier, and approval code for patient records"
+                  alt="Payment confirmation showing thank-you message, email confirmation sent, share receipt action, and payment summary with visit details and amount paid"
+                  caption="Confirmation — structured receipt with visit details, payment date, and share/print actions"
+                  mobile
                 />
               </section>
 
               <section>
-                <SectionTitle label="06" title="Engineering approach" />
+                <SectionTitle label="07" title="Engineering approach" />
                 <div className="mt-6 space-y-5 text-base leading-relaxed text-muted">
                   <p>
                     The backend runs Apollo Server with a GraphQL API — flexible enough to serve
-                    the varied data shapes that bill pay, prepayments, and payment plans each need
-                    without proliferating REST endpoints. The frontend is React + TypeScript with
-                    shared types at the API boundary, enforced through codegen.
+                    the varied data shapes that bill pay, payment plans, and card management each
+                    need without proliferating REST endpoints. The frontend is React + TypeScript
+                    with shared types at the API boundary, enforced through codegen.
                   </p>
                   <p>
                     Key patterns: shared discriminated types for payment plan status (driving
