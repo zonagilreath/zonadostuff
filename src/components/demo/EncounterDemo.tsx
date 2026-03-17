@@ -91,7 +91,7 @@ export function EncounterDemo() {
           <div>
             <Reveal>
               <h2 className="font-display text-3xl sm:text-4xl tracking-tight text-text mb-3">
-                Initiative Vault
+                Gelatinous Vault
               </h2>
             </Reveal>
             <Reveal delayMs={80}>
@@ -133,7 +133,7 @@ export function EncounterDemo() {
             <Reveal delayMs={200}>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="https://initiative-vault.vercel.app"
+                  href="https://gelatinousvault.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-5 py-3 bg-accent hover:bg-accent/90 text-surface font-code text-sm font-semibold rounded-lg transition-colors inline-flex items-center justify-center gap-2 shadow-glow"

@@ -20,7 +20,7 @@ const work: WorkItem[] = [
     href: '/work/athenahealth'
   },
   {
-    title: 'Initiative Vault',
+    title: 'Gelatinous Vault',
     category: 'Startup · Founding Engineer',
     blurb:
       'Built the full stack from scratch for a professional-grade tabletop RPG encounter manager: event-sourced state, tRPC API, PostgreSQL with RLS auth, and a CI/CD pipeline.',
