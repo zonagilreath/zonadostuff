@@ -12,7 +12,7 @@ export default {
         accent: '#ff375f',
         'accent-dim': 'rgba(255, 55, 95, 0.18)',
         text: '#f4f1ea',
-        muted: 'rgba(244, 241, 234, 0.66)',
+        muted: 'rgba(244, 241, 234, 0.75)',
         'muted-bg': 'rgba(255, 255, 255, 0.05)',
         destructive: '#ff375f',
         ring: '#7dd3fc'

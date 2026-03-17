@@ -2,7 +2,9 @@ import { Container } from '../ui/Container';
 
 type WorkItem = {
   title: string;
+  category: string;
   blurb: string;
+  impact?: string;
   highlights: string[];
   href: string;
 };
@@ -10,30 +12,38 @@ type WorkItem = {
 const work: WorkItem[] = [
   {
     title: 'athenahealth',
+    category: 'Enterprise · Lead Engineer',
     blurb:
-      'Lead engineer on patient financial products serving 30M monthly active users. Shipped Card on File, Payment Plans, and Prepayment — directly contributing to $2.5B in annual payments processed.',
-    highlights: ['$2.5B annual payment volume', '30M monthly active users', 'Apollo GraphQL · React · TypeScript'],
+      'Led patient financial products serving 30M monthly active users. Shipped Card on File, Payment Plans, and Prepayment — directly contributing to $2.5B in annual payments processed.',
+    impact: '$2.5B annual volume',
+    highlights: ['Apollo GraphQL', 'React', 'TypeScript', 'Java Spring Boot', 'HIPAA'],
     href: '/work/athenahealth'
   },
   {
     title: 'Initiative Vault',
+    category: 'Startup · Founding Engineer',
     blurb:
-      'Founding engineer on a professional-grade tabletop RPG encounter manager. Built the full stack from scratch: event-sourced state, tRPC API, PostgreSQL with RLS auth, and a CI/CD pipeline.',
-    highlights: ['Event-sourced architecture', 'tRPC + Zod · Prisma · Supabase', 'Railway + Vercel deploy'],
+      'Built the full stack from scratch for a professional-grade tabletop RPG encounter manager: event-sourced state, tRPC API, PostgreSQL with RLS auth, and a CI/CD pipeline.',
+    impact: 'Full-stack ownership',
+    highlights: ['Event sourcing', 'tRPC + Zod', 'Prisma', 'Supabase', 'Railway'],
     href: '/work/initiative-vault'
   },
   {
     title: 'Familiar',
+    category: 'Experiment · AI/RAG',
     blurb:
-      'An experiment in AI-assisted D&D encounter generation. Explores where LLMs genuinely add value as a supplement — not a replacement — for the human side of running a table. Uses RAG, MCP, and Gemini context caching.',
-    highlights: ['RAG + MCP architecture', 'Gemini context caching', 'Local tool-calling over SRD data'],
+      'AI-assisted D&D encounter generation using RAG, MCP tool-calling, and Gemini context caching. Explores where LLMs add real value as a supplement — not a replacement.',
+    impact: 'Live demo',
+    highlights: ['RAG + MCP', 'Gemini', 'Next.js', 'Vercel AI SDK'],
     href: '/work/familiar'
   },
   {
     title: 'Perspect',
+    category: 'Experiment · Dev Tools',
     blurb:
-      'A schema-to-code tool that takes Prisma, SQL DDL, or plain English and generates TypeScript types, Zod validators, tRPC routers, and React forms. Type generation is fully deterministic; LLM handles tRPC and form scaffolding via structured IR.',
-    highlights: ['Prisma · SQL · Plain English input', 'Vercel AI SDK · streaming', 'Monaco Editor · Next.js 14'],
+      'Schema-to-code tool: takes Prisma, SQL DDL, or plain English and generates TypeScript types, Zod validators, tRPC routers, and React forms.',
+    impact: 'Live demo',
+    highlights: ['Prisma', 'SQL', 'Vercel AI SDK', 'Monaco Editor', 'Next.js'],
     href: '/work/perspect'
   }
 ];
@@ -42,47 +52,65 @@ export function SelectedWork() {
   return (
     <section id="work" className="scroll-mt-24 py-20">
       <Container>
-        <div className="max-w-3xl">
-          <div className="flex items-baseline justify-between gap-6">
-            <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
+        <div className="flex items-end justify-between gap-6">
+          <div>
+            <p className="font-heading text-[11px] font-semibold tracking-[0.14em] text-accent uppercase">Portfolio</p>
+            <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
               Selected work
             </h2>
-            <div className="font-code text-xs tracking-[0.22em] text-muted">4 CASE STUDIES</div>
           </div>
+          <p className="hidden font-heading text-xs tracking-[0.1em] text-muted uppercase sm:block">
+            {work.length} CASE STUDIES
+          </p>
+        </div>
 
-          <div className="mt-8 border-t border-border/70">
-            {work.map((w) => (
-              <a
-                key={w.title}
-                href={w.href}
-                className="group block border-b border-border/70 py-8 transition-colors hover:bg-bg/25"
-              >
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between gap-6">
-                    <div className="font-heading text-xl font-bold tracking-tight text-text">
-                      {w.title}
-                    </div>
-                    <div className="font-code text-xs tracking-[0.22em] text-accent opacity-0 transition-opacity group-hover:opacity-100">
-                      READ →
-                    </div>
-                  </div>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          {work.map((w) => (
+            <a
+              key={w.title}
+              href={w.href}
+              className="group relative flex flex-col border border-border/60 bg-surface/50 p-6 transition-all duration-200 hover:border-accent/40 hover:bg-surface/80 sm:p-8"
+            >
+              {/* Category + Impact row */}
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-heading text-[10px] font-medium tracking-[0.1em] text-muted uppercase">
+                  {w.category}
+                </span>
+                {w.impact && (
+                  <span className="font-heading text-[10px] font-semibold tracking-[0.1em] text-accent uppercase">
+                    {w.impact}
+                  </span>
+                )}
+              </div>
 
-                  <p className="text-base leading-relaxed text-muted">{w.blurb}</p>
+              {/* Title */}
+              <h3 className="mt-4 font-heading text-xl font-bold tracking-tight text-text sm:text-2xl">
+                {w.title}
+              </h3>
 
-                  <div className="flex flex-wrap gap-2">
-                    {w.highlights.map((h) => (
-                      <span
-                        key={`${w.title}-${h}`}
-                        className="inline-flex items-center border border-border/70 bg-bg/25 px-2.5 py-1 font-code text-[12px] text-muted transition-colors group-hover:border-accent/30 group-hover:text-text"
-                      >
-                        {h}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
+              {/* Description */}
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
+                {w.blurb}
+              </p>
+
+              {/* Tech tags */}
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {w.highlights.map((h) => (
+                  <span
+                    key={`${w.title}-${h}`}
+                    className="inline-flex items-center bg-muted-bg px-2 py-0.5 font-code text-[10px] tracking-wider text-muted transition-colors group-hover:text-text/80"
+                  >
+                    {h}
+                  </span>
+                ))}
+              </div>
+
+              {/* Hover arrow */}
+              <div className="absolute bottom-6 right-6 font-heading text-xs font-semibold tracking-[0.1em] text-accent opacity-0 transition-opacity group-hover:opacity-100 sm:bottom-8 sm:right-8">
+                VIEW →
+              </div>
+            </a>
+          ))}
         </div>
       </Container>
     </section>
