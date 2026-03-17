@@ -1,4 +1,5 @@
 import { Container } from '../ui/Container';
+import { ExternalLink } from '../ui/ExternalLink';
 
 export function Footer() {
   return (
@@ -16,22 +17,18 @@ export function Footer() {
             >
               Email
             </a>
-            <a
+            <ExternalLink
               className="font-heading text-xs tracking-[0.08em] text-muted hover:text-text transition-colors"
               href="https://linkedin.com/in/zonagilreath"
-              target="_blank"
-              rel="noreferrer"
             >
               LinkedIn
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               className="font-heading text-xs tracking-[0.08em] text-muted hover:text-text transition-colors"
               href="https://github.com/ZonaGilreath"
-              target="_blank"
-              rel="noreferrer"
             >
               GitHub
-            </a>
+            </ExternalLink>
           </div>
         </div>
       </Container>

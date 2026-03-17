@@ -11,10 +11,17 @@ import { PerspectCaseStudy } from './pages/work/Perspect';
 export default function App() {
   return (
     <div className="app-shell">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:border focus:border-accent/30 focus:bg-bg focus:px-4 focus:py-2 focus:font-heading focus:text-sm focus:text-text"
+      >
+        Skip to main content
+      </a>
+
       <Nav />
       <ScrollToHash />
 
-      <main>
+      <main id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/work/initiative-vault" element={<InitiativeVaultCaseStudy />} />

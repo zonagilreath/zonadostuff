@@ -1,5 +1,6 @@
 import { ButtonLink } from '../ui/Button';
 import { Container } from '../ui/Container';
+import { ExternalLink } from '../ui/ExternalLink';
 
 const EMAIL = 'bryson.gilreath@gmail.com';
 
@@ -24,23 +25,19 @@ export function HomeContact() {
               Email me directly
             </ButtonLink>
 
-            <a
+            <ExternalLink
               className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
               href="https://linkedin.com/in/zonagilreath"
-              target="_blank"
-              rel="noreferrer"
             >
               LinkedIn ↗
-            </a>
+            </ExternalLink>
 
-            <a
+            <ExternalLink
               className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
               href="https://github.com/ZonaGilreath"
-              target="_blank"
-              rel="noreferrer"
             >
               GitHub ↗
-            </a>
+            </ExternalLink>
           </div>
 
           <div className="mt-10 border-t border-border/40 pt-6 font-code text-xs tracking-[0.18em] text-muted">

@@ -79,6 +79,8 @@ export function Nav() {
         <button
           className="inline-flex items-center gap-2 font-heading text-xs uppercase tracking-[0.12em] text-muted hover:text-text md:hidden"
           aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
           onClick={() => setMobileOpen((v) => !v)}
         >
           MENU
@@ -87,7 +89,7 @@ export function Nav() {
       </div>
 
       {mobileOpen ? (
-        <div className="border-t border-border/70 bg-bg/90 md:hidden">
+        <div id="mobile-nav" className="border-t border-border/70 bg-bg/90 md:hidden">
           <div className="mx-auto flex max-w-6xl flex-col px-6 py-4">
             {navItems.map((item) => (
               <button

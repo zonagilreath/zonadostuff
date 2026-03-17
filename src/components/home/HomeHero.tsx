@@ -1,5 +1,6 @@
 import { ButtonLink } from '../ui/Button';
 import { Container } from '../ui/Container';
+import { ExternalLink } from '../ui/ExternalLink';
 
 export function HomeHero() {
   return (
@@ -53,22 +54,18 @@ export function HomeHero() {
             </ButtonLink>
 
             <div className="flex items-center gap-4 sm:ml-2">
-              <a
+              <ExternalLink
                 className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
                 href="https://linkedin.com/in/zonagilreath"
-                target="_blank"
-                rel="noreferrer"
               >
                 LinkedIn ↗
-              </a>
-              <a
+              </ExternalLink>
+              <ExternalLink
                 className="font-heading text-xs uppercase tracking-[0.1em] text-muted hover:text-text transition-colors"
                 href="https://github.com/ZonaGilreath"
-                target="_blank"
-                rel="noreferrer"
               >
                 GitHub ↗
-              </a>
+              </ExternalLink>
             </div>
           </div>
         </div>
