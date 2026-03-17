@@ -4,11 +4,12 @@ import { useActiveSection } from '../../hooks/useActiveSection';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { useScrolled } from '../../hooks/useScrolled';
 
-type SectionId = 'about' | 'work' | 'contact';
+type SectionId = 'work' | 'services' | 'about' | 'contact';
 
 const navItems: Array<{ id: SectionId; label: string }> = [
-  { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
+  { id: 'services', label: 'Services' },
+  { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' }
 ];
 
@@ -20,7 +21,7 @@ export function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const active = useActiveSection<SectionId>(['about', 'work', 'contact'] as const);
+  const active = useActiveSection<SectionId>(['work', 'services', 'about', 'contact'] as const);
 
   const scrollToId = (id: SectionId) => {
     if (location.pathname !== '/') {
@@ -53,7 +54,7 @@ export function Nav() {
           ZONA
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -67,26 +68,12 @@ export function Nav() {
             </button>
           ))}
 
-          <div className="ml-2 h-4 w-px bg-border/70" aria-hidden />
-
-          <Link
-            to="/work/initiative-vault"
-            className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
+          <a
+            href="mailto:bryson.gilreath@gmail.com"
+            className="ml-2 inline-flex items-center gap-2 border border-accent/30 bg-accent px-3.5 py-1.5 font-code text-[11px] font-semibold tracking-[0.22em] text-bg transition-colors hover:bg-accent/90"
           >
-            IV
-          </Link>
-          <Link
-            to="/work/familiar"
-            className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
-          >
-            FAMILIAR
-          </Link>
-          <Link
-            to="/work/athenahealth"
-            className="font-code text-xs tracking-[0.22em] text-muted hover:text-text"
-          >
-            ATHENA
-          </Link>
+            HIRE ME
+          </a>
         </nav>
 
         <button
@@ -118,28 +105,13 @@ export function Nav() {
               </button>
             ))}
 
-            <div className="mt-2 border-t border-border/70 pt-2">
-              <Link
-                to="/work/initiative-vault"
-                onClick={() => setMobileOpen(false)}
-                className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
+            <div className="mt-2 border-t border-border/70 pt-4">
+              <a
+                href="mailto:bryson.gilreath@gmail.com"
+                className="inline-flex items-center gap-2 border border-accent/30 bg-accent px-4 py-2 font-code text-[11px] font-semibold tracking-[0.22em] text-bg"
               >
-                Initiative Vault
-              </Link>
-              <Link
-                to="/work/familiar"
-                onClick={() => setMobileOpen(false)}
-                className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
-              >
-                Familiar
-              </Link>
-              <Link
-                to="/work/athenahealth"
-                onClick={() => setMobileOpen(false)}
-                className="block py-3 text-left font-code text-xs tracking-[0.22em] text-muted"
-              >
-                athenahealth
-              </Link>
+                HIRE ME
+              </a>
             </div>
           </div>
         </div>

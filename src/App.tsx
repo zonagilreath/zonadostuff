@@ -39,7 +39,7 @@ function ContactQuickAccess() {
       className="fixed bottom-5 right-5 z-50 hidden items-center gap-2 border border-border/70 bg-bg/70 px-3 py-2 font-code text-[11px] tracking-[0.22em] text-muted transition-colors hover:border-accent/30 hover:text-text supports-[backdrop-filter]:backdrop-blur md:inline-flex"
       aria-label="Email Zona"
     >
-      CONTACT
+      HIRE ME
       <span className="text-accent">↗</span>
     </a>
   );

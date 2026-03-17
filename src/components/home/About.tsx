@@ -1,52 +1,78 @@
 import { Container } from '../ui/Container';
 
+const stats = [
+  { value: '8+', label: 'Years in software' },
+  { value: '30M', label: 'Users at scale' },
+  { value: '$2.5B', label: 'Annual payment volume' },
+  { value: '3', label: 'Production apps shipped' }
+];
+
+const techGrid = [
+  {
+    label: 'FRONTEND',
+    items: 'React · TypeScript · Tailwind · Radix UI · Next.js'
+  },
+  {
+    label: 'BACKEND',
+    items: 'PostgreSQL · Prisma · tRPC · Node.js · GraphQL'
+  },
+  {
+    label: 'INFRASTRUCTURE',
+    items: 'Docker · AWS · GitHub Actions · Vercel · Railway'
+  },
+  {
+    label: 'AI & TOOLING',
+    items: 'Vercel AI SDK · Gemini · RAG · MCP · Vitest'
+  }
+];
+
 export function About() {
   return (
     <section id="about" className="scroll-mt-24 py-20">
       <Container>
-        <div className="max-w-3xl">
-          <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">About</h2>
+        <p className="font-code text-[11px] tracking-[0.22em] text-accent uppercase">About</p>
+        <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-text sm:text-3xl">
+          How I work
+        </h2>
 
-          <div className="mt-8 space-y-5 text-base leading-relaxed text-muted">
+        {/* Stats strip */}
+        <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden border border-border/60 bg-border/30 sm:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="bg-bg px-5 py-5 text-center sm:px-6">
+              <div className="font-heading text-2xl font-bold text-text sm:text-3xl">{s.value}</div>
+              <div className="mt-1 font-code text-[10px] tracking-[0.22em] text-muted uppercase">{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 grid gap-12 lg:grid-cols-5">
+          {/* Bio — takes 3 cols */}
+          <div className="space-y-5 text-base leading-relaxed text-muted lg:col-span-3">
             <p>
-              I build modern web applications with an emphasis on clarity: predictable data flow,
-              type-safe boundaries, and interfaces that feel fast and obvious.
+              I build production web applications with an emphasis on clarity — predictable data flow,
+              type-safe boundaries, and interfaces that feel fast and obvious. I care about the whole loop:
+              product intent, UX, implementation, and long-term maintenance.
             </p>
             <p>
-              I care about the whole loop — product intent, UX, implementation, and long-term
-              maintenance. When projects ship, they should keep shipping.
+              Previously a lead engineer at <strong className="text-text font-medium">athenahealth</strong>,
+              where I owned features across a patient payments platform at scale, and a frontend contractor
+              at <strong className="text-text font-medium">Apple</strong>, where I built internal tooling
+              that turned user actions into test automation code.
             </p>
             <p>
-              Previously a lead engineer at athenahealth, where I owned features across a patient
-              payments platform at scale, and a frontend contractor at Apple, where I built internal
-              tooling that turned user actions into test automation code. That experience shapes how
-              I think about systems: clean enough to hand off, reliable enough to trust.
-            </p>
-            <p>
-              Outside of software, I make films and write — which mostly shows up as an obsession
-              with structure, pacing, and a sharp edit in the products I build.
+              That experience shapes how I approach contract work: I write systems that are clean enough
+              to hand off, reliable enough to trust, and documented well enough for the next engineer.
             </p>
           </div>
 
-          <div className="mt-10 border-t border-border/70 pt-8">
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div>
-                <div className="font-code text-[11px] tracking-[0.22em] text-muted">FRONTEND</div>
-                <div className="mt-2 text-sm text-text">React · TypeScript · Tailwind · Radix UI</div>
+          {/* Tech grid — takes 2 cols */}
+          <div className="space-y-6 lg:col-span-2">
+            {techGrid.map((group) => (
+              <div key={group.label}>
+                <div className="font-code text-[10px] tracking-[0.22em] text-muted">{group.label}</div>
+                <div className="mt-2 text-sm leading-relaxed text-text">{group.items}</div>
               </div>
-              <div>
-                <div className="font-code text-[11px] tracking-[0.22em] text-muted">BACKEND</div>
-                <div className="mt-2 text-sm text-text">PostgreSQL · Prisma · tRPC · Node.js</div>
-              </div>
-              <div>
-                <div className="font-code text-[11px] tracking-[0.22em] text-muted">INFRA</div>
-                <div className="mt-2 text-sm text-text">Docker · AWS · GitHub Actions · Vercel</div>
-              </div>
-              <div>
-                <div className="font-code text-[11px] tracking-[0.22em] text-muted">ALSO</div>
-                <div className="mt-2 text-sm text-text">Apollo GraphQL · Supabase · Vitest</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </Container>
